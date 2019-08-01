@@ -1,0 +1,26 @@
+/* pages/mineFocus/mineFocus.wxss */
+.mine_focue_box{
+  width: 92%;
+  height: 24vw;
+  line-height: 24vw;
+  margin: 0 auto;
+  border-bottom: 1px solid #f4f4f4;
+}
+.mine_focue_box .focue_head{
+  width: 15.5vw;
+  height: 15.5vw;
+  border-radius:100vw;
+  vertical-align: middle
+}
+.mine_focue_box text{
+  font-size: 4.27vw;
+  color: #333333;
+  margin-left: 3.2vw;
+}
+.mine_focue_box .focue_right{
+  width: 2.1vw;
+  height: 3.5vw;
+  float: right;
+  margin-top: 10.25vw;
+  margin-right: 4.27vw;
+}

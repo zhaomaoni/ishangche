@@ -1,0 +1,21 @@
+<!--pages/mineFocus/mineFocus.wxml-->
+<view class="mine_focue_box">
+  <image class="focue_head" mode='aspectFill' src="../../images/lixian.jpg"/>
+  <text>上车超跑</text>
+  <image class="focue_right" src="../../images/icon_jian2.png"/>
+</view>
+<view class="mine_focue_box">
+  <image class="focue_head" mode='aspectFill' src="../../images/lixian.jpg"/>
+  <text>上车超跑</text>
+  <image class="focue_right" src="../../images/icon_jian2.png"/>
+</view>
+<view class="mine_focue_box">
+  <image class="focue_head" mode='aspectFill' src="../../images/lixian.jpg"/>
+  <text>上车超跑</text>
+  <image class="focue_right" src="../../images/icon_jian2.png"/>
+</view>
+<view class="mine_focue_box">
+  <image class="focue_head" mode='aspectFill' src="../../images/lixian.jpg"/>
+  <text>上车超跑</text>
+  <image class="focue_right" src="../../images/icon_jian2.png"/>
+</view>

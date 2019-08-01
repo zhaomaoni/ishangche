@@ -1,0 +1,27 @@
+<!--pages/mine/mine.wxml-->
+<view class="mine_header_box">
+  <view class="nav_head_box" mode="aspectFill" style="padding-top:{{statusBarHeight}}px">
+    <image src="../../images/icon_back2.png" bindtap='histroyBack'/>
+    <text>我的</text>
+  </view>
+  <view class="mine_login_box">
+    <image class="mine_login_head" src="../../images/icon_head.png"/>
+    <text class="noNumber" wx:if="{{isShow}}" bindtap='loginNav'>用户未登录</text>
+    <view class="yesNumber" wx:else>
+      <text>帅的一匹</text>
+      <text>上车号：{{scNumber}}</text>
+    </view>
+  </view>
+</view>
+<view class="mine_list_btn" bindtap='mineFocue'>
+  <image src="../../images/icon_jian2.png"/>
+  <text>关注</text>
+</view>
+<view class="mine_list_btn" bindtap='downApp'>
+  <image src="../../images/icon_jian2.png"/>
+  <text>下载上车</text>
+</view>
+<view class="mine_list_btn" wx:if="{{!isShow}}">
+  <image src="../../images/icon_jian2.png"/>
+  <text>退出登录</text>
+</view>

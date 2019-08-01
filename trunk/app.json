@@ -1,0 +1,21 @@
+{
+  "pages": [
+    "pages/loginAll/loginAll",
+    "pages/index/index",
+    "pages/focus/focus",
+    "pages/moreDetails/moreDetails",
+    "pages/mineFocus/mineFocus",
+    "pages/vDetails/vDetails",
+    "pages/aDetails/aDetails",
+    "pages/openApp/openApp",
+    "pages/loginApp/loginApp",
+    "pages/mine/mine"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "上车资讯",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json"
+}

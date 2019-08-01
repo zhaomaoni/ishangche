@@ -1,0 +1,7 @@
+<!--pages/openApp/openApp.wxml-->
+<view class="down_bg">
+    <view class="down_bg_box"></view>
+    <view class="download_btn" id="appDown" bindtap='appDown'>
+        <image src="../../images/icon_btn.png"/>
+    </view>
+</view>

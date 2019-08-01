@@ -1,0 +1,256 @@
+page{
+  background: #222;
+}
+/* 视频 */
+.video_msg_box{
+  width: 100%;
+  height: 53vw;
+  margin-bottom: 4vw;
+  overflow: hidden;
+}
+.video_msg_box video{
+  width: 100%;
+  height: 100%;
+}
+/* 标题信息 */
+.header_top_box{
+  width: 92%;
+  margin: 0 auto;
+  overflow: hidden;
+  display: flex
+}
+.head_guan{
+  width: 18.1vw;
+  height: 6.9vw;
+  background: #010101;
+  color: #fff;
+  margin: 6px 0;
+  font-size: 3.7vw;
+  line-height: 6.9vw;
+  text-align: center;
+  border-radius: 2px;
+}
+.active_guan{
+  background: #bbb;
+}
+.head_user_msg{
+  flex: 1;
+  height: 10.1vw;
+  width: 100%;
+  margin-right: 6vw;
+  overflow: hidden;
+}
+.user_header_pic{
+  width: 10.1vw;
+  height: 10.1vw;
+  border-radius: 100px;
+  overflow: hidden;
+  float: left;
+  margin-right: 2vw
+}
+.user_header_pic image{
+  width: 100%;
+  height: 100%;
+}
+.user_name text{
+  display: block;
+  line-height: 4.9vw;
+  font-size: 3.7vw;
+  color: #fff;
+}
+.user_name .user_sign{
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+  color: #999;
+  font-size: 3.2vw;
+}
+/* 详情标题 及 日期 播放量 */
+.details_title{
+  width: 92%;
+  color: #fff;
+  font-size: 4.8vw;
+  margin: 4vw auto 2vw auto;
+  font-weight: 500;
+}
+.details_date{
+  width: 92%;
+  margin: 0 auto;
+  font-size: 3.2vw;
+  color: #999;
+  margin-bottom: 9.3vw;
+}
+.details_date view{
+  display: inline-block;
+  margin-right: 4.27vw
+}
+/* 相关推荐 */
+.about_news_box{
+  width: 92%;
+  margin: 0 auto;
+  margin-bottom:5vw;
+}
+.about_title{
+  font-size: 4.27vw;
+  color: #fff;
+  font-weight: 500;
+  margin-bottom: 4vw;
+}
+.about_dls_box{
+  width: 100%;
+  overflow: hidden;
+}
+.about_dls_main{
+  width: 100%;
+  height: 21.3vw;
+  margin-bottom: 6.7vw;
+  overflow: hidden;
+  position: relative;
+}
+.about_dls_main .about_img{
+  width: 32vw;
+  height: 100%;
+  float: left;
+  border-radius: 2.13vw;
+  margin-right: 4vw;
+}
+.about_msg_box{
+  height: 100%;
+  color: #b6b6b6;
+  margin-left:36vw;
+}
+.about_msg_title{
+  word-break: break-all;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  font-size: 4.27vw;
+}
+.baout_from{
+  font-size: 3.2vw;
+  color: #888;
+  position: absolute;
+  bottom: 0;
+}
+/* 评论 */
+.ping_lun_box{
+  width: 92%;
+  margin: 0 auto;
+  margin-bottom: 25vw
+}
+.ping_lun_title{
+  font-size: 4.27vw;
+  color: #fff;
+  font-weight: 500
+}
+.no_have_ping{
+  text-align: center;
+  color: #999;
+  margin: 12.8vw 0 40vw 0;
+  font-size: 4.27vw;
+}
+.have_ping_box{
+  width: 100%;
+  overflow: hidden;
+  margin-top:5.3vw;
+}
+.user_ping_box{
+  width: 100%;
+  display: flex;
+  margin-bottom:8vw;
+}
+.ping_user_header{
+  width: 9.1vw;
+  height: 9.1vw;
+  border-radius: 100px;
+  overflow: hidden;
+  margin-right: 2.7vw;
+}
+.ping_user_header image{
+  width: 100%;
+  height: 100%
+}
+.ping_user_name{
+  flex: 1;
+  width: 100%;
+  overflow: hidden;
+}
+.user_name_msg{
+  font-size: 3.73vw;
+  line-height: 5.3vw;
+  color: #888;
+  margin-bottom:2vw;
+}
+.user_name_msg text{
+  display: block;
+}
+.user_name_msg text:last-child{
+  font-size: 2.7vw;
+  color: #888
+}
+.first_user_ping{
+  font-size: 4.27vw;
+  margin-bottom: 4vw;
+  color: #9f9f9f;
+}
+.three_ping_msg{
+  width: 100%;
+  background: #2f2f2f;
+  border-radius: 2.13vw;
+  padding:3vw 0;
+}
+.three_msg_lun{
+  width: 94%;
+  margin: 0 auto;
+  font-size: 4.27vw;
+  padding-bottom: 2.7vw;
+  color: #b6b6b6;
+}
+.three_msg_lun text{
+  color:#EAA556;
+}
+.all_ping_msg{
+  width:94%;
+  font-size:3.2vw;
+  color:#EAA556;
+  margin:0 auto;
+}
+.all_ping_msg image{
+  width:4vw;
+  height:2.6vw;
+}
+/* 点赞+评论+分享 */
+.zan_ping_share{
+  width: 100%;
+  height: 18vw;
+  background: #4a4a4a;
+  border-top: 1px solid #343434;
+  position: fixed;
+  bottom: 0;
+  overflow: hidden;
+}
+.module_box{
+  width: 33.3%;
+  height: 100%;
+  float: left;
+  text-align: center;
+}
+.module_box image{
+  width: 6.4vw;
+  height: 6.4vw;
+  margin-top: 3vw
+}
+.module_box text{
+  display: block;
+  font-size: 2.7vw;
+  color: #999;
+}
+.details_main_box{
+  width:92%;
+  margin:0 auto;
+  margin-bottom:2vw;
+  font-size: 3.2vw;
+  color: #999999;
+}

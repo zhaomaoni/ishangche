@@ -1,0 +1,43 @@
+/* pages/allLogin/allLogin.wxss */
+.login_head_box{
+  width: 21.3vw;
+  height: 21.3vw;
+  position: relative;
+  left: 50%;
+  margin-left: -10.65vw;
+  margin-top: 14.4vw;
+  margin-bottom: 11.7vw;
+}
+.login_head_box image{
+  width: 100%;
+  height: 100%;
+}
+.wx_login_box{
+  width: 87.5vw;
+  height: 11.7vw;
+  margin: 0 auto;
+  margin-bottom: 5.3vw;
+  text-align: center;
+  line-height: 11.7vw;
+  font-size: 4.27vw;
+  border-radius: 2.1vw;
+  color: #ffffff;
+}
+.wx_login_box button{
+  width: 100%;
+  height: 100%;
+  background: #4CC065;
+  color: #ffffff;
+  line-height: 11.7vw;
+  font-size: 4.27vw;
+}
+.wx_login_box:last-child{
+  background: #222222;
+}
+.wx_login_box image{
+  width: 5.3vw;
+  height: 4.27vw;
+  display: inline-block;
+  margin-right: 2.7vw;
+  vertical-align: middle;
+}

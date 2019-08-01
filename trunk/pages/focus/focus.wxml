@@ -1,0 +1,33 @@
+<!--pages/focus/focus.wxml-->
+<view class="focus_user_box">
+  <view class="focus_head_box">
+    <image class="focus_pic1" mode='aspectFill' src="../../images/lixian.jpg"/>
+    <image class="focus_pic2" src="{{focusImg}}"/>
+  </view>
+  <view class="title_focus_box">上车超跑</view>
+  <view class="main_focus_box">上车超跑专门问您提供炫酷的超跑视</view>
+</view>
+<view class="content_title">历史资讯</view>
+<view class="content_main_box">
+  <view class="main_pic_box">
+    <image mode="widthFix" src="../../images/lixian.jpg"/>
+  </view>
+  <view class="main_title_box">布加迪Chiron Sport,2.4秒完成破百的超级跑车</view>
+  <view class="main_number_box">
+    <view class="number_type">
+      <view class="number_msg">
+        <image mode='aspectFit' src="../../images/icon_eye.png"/>
+        <text> 108</text>
+      </view>
+      <view class="number_msg">
+        <image mode='aspectFit' src="../../images/icon_ping1.png"/>
+        <text> 108</text>
+      </view>
+      <view class="number_msg">
+        <image mode='aspectFit' src="../../images/icon_zan1.png"/>
+        <text> 108</text>
+      </view>
+    </view>
+    <text class="main_from">上车超跑</text>
+  </view>
+</view>

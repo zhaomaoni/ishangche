@@ -1,0 +1,41 @@
+/* pages/login/login.wxss */
+.login_head_box{
+  width: 21.3vw;
+  height: 21.3vw;
+  position: relative;
+  left: 50%;
+  margin-left: -10.65vw;
+  margin-top: 14.4vw;
+  margin-bottom: 11.7vw;
+}
+.login_head_box image{
+  width: 100%;
+  height: 100%;
+}
+.login_number_inp{
+  width: 87.5vw;
+  height: auto;
+  overflow: hidden;
+  margin: 0 auto;
+}
+.login_number_inp input{
+  height: 11.7vw;
+  width: 100%;
+  background: #f2f2f2;
+  margin-bottom: 5.3vw;
+  font-size: 4.27vw;
+  border-radius: 2.1vw;
+  padding-left: 5.3vw
+}
+.login_sure_btn{
+  width: 87.5vw;
+  height: 11.7vw;
+  background: #222222;
+  color: #ffffff;
+  font-size: 4.27vw;
+  text-align: center;
+  line-height: 11.7vw;
+  margin: 0 auto;
+  border-radius: 2.1vw;
+  margin-top: 6.4vw;
+}

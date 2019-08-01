@@ -1,0 +1,14 @@
+<!--pages/allLogin/allLogin.wxml-->
+<view class="login_head_box">
+  <image src="../../images/icon_head.png"/>
+</view>
+<view class="wx_login_box">
+   <button open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+    <image mode="aspectFit" src="../../images/icon_wx.png"/>
+    <text>微信登录</text>
+   </button>
+</view>
+<view class="wx_login_box" bindtap='scLogin'>
+  <image mode="aspectFit" src="../../images/icon_sc.png"/>
+  <text>上车账号登录</text>
+</view>
