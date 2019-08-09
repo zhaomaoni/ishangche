@@ -37,12 +37,13 @@
   position: relative;
   margin-top: 7.7vw;
   overflow: hidden;
+  display: flex
 }
 .mine_login_box .mine_login_head{
   width: 15.5vw;
   height: 100%;
-  float: left;
   margin-left: 11.7vw;
+  border-radius: 100%;
 }
 .mine_login_box .noNumber{
   line-height: 15.5vw;
@@ -51,17 +52,19 @@
   font-size: 4.27vw;
 }
 .mine_login_box .yesNumber{
-  float: left;
   color: #fff;
   font-size: 4.27vw;
-  margin-left: 3.73vw
+  margin-left: 3.73vw;
+  flex: 1;
+  margin-right:10vw;
 }
-.mine_login_box .yesNumber text{
+.mine_login_box .yesNumber view{
   display: block;
   padding-top: 2vw;
 }
-.mine_login_box .yesNumber text:last-child{
+.mine_login_box .yesNumber view:last-child{
   font-size: 2.9vw;
+  height: 6vw;
   color: rgba(255,255,255,0.7);
 }
 /* 点击跳转 */
@@ -85,4 +88,17 @@
   color: #333333;
   font-size: 4.27vw;
   margin-left: 5.3vw;
+}
+.yesNumber .btnLogin button{
+  width: 100%;
+  height: 100%;
+  line-height: 6vw;
+  font-size: 2.9vw;
+  background: none;
+  text-align: left;
+  padding: 0;
+  color:rgba(255,255,255,0.7);
+}
+button::after{
+  border: 0;
 }

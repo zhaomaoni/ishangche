@@ -1,6 +1,6 @@
 <!--pages/allLogin/allLogin.wxml-->
 <view class="login_head_box">
-  <image src="../../images/icon_head.png"/>
+  <image src="{{avatarUrl}}"/>
 </view>
 <view class="wx_login_box">
    <button open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
@@ -11,4 +11,12 @@
 <view class="wx_login_box" bindtap='scLogin'>
   <image mode="aspectFit" src="../../images/icon_sc.png"/>
   <text>上车账号登录</text>
+</view>
+<view class="login_layer_box" wx:if="{{isShow}}">
+  <view class="login_main_layer">
+    <view class="layer_title">未绑定上车号</view>
+    <view class="layer_btn">
+      <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">确定</button>
+    </view>
+  </view>
 </view>

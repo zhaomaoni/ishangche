@@ -1,3 +1,4 @@
+@import "/wxParse/wxParse.wxss";
 page{
   background: #222;
 }
@@ -207,6 +208,7 @@ page{
   font-size: 4.27vw;
   padding-bottom: 2.7vw;
   color: #b6b6b6;
+  text-align: justify;
 }
 .three_msg_lun text{
   color:#EAA556;
@@ -247,10 +249,79 @@ page{
   font-size: 2.7vw;
   color: #999;
 }
+.module_box .yellow{
+  color: #FFD98B
+}
+.module_box button{
+  padding: 0;
+  height: 100%;
+  background:none;
+  line-height:inherit;
+}
+button::after{
+  border: 0
+}
 .details_main_box{
   width:92%;
   margin:0 auto;
   margin-bottom:2vw;
   font-size: 3.2vw;
   color: #999999;
+}
+/* 发表评论弹层 */
+.Boxbg{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+.ping_layer_box{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,0.5)
+}
+.ping_content_layer{
+  width: 100%;
+  min-height: 15.5vw;
+  position: absolute;
+  bottom: 0;
+  background: #222222;
+  align-items:center; 
+  display: -webkit-flex;
+}
+.ping_content_layer textarea{
+  width:73vw;
+  height:11vw;
+  max-height: 18vw;
+  margin:2.25vw 4vw;
+  float:left;
+  background:#2f2f2f;
+  border-radius:2.13vw;
+  font-size:3.73vw;
+  line-height:5vw;
+  padding: 3vw 0;
+  padding-left:3vw;
+  overflow-y:hidden;
+  word-break:break-all;
+  word-wrap:break-word;
+  color: #ffffff;
+}
+.ping_content_layer text{
+  width: 12vw;
+  height: 100%;
+  vertical-align: middle;
+  color: #ffffff;
+  font-size: 4.27vw;
+  float: right;
+  margin-right: 4vw;
+  text-align: center;
+}
+.layHide{
+  width: 100%;
+  height:90%;
+  position: fixed;
+  top: 0; 
 }

@@ -7,6 +7,8 @@
   margin-left: -10.65vw;
   margin-top: 14.4vw;
   margin-bottom: 11.7vw;
+  border-radius:100%;
+  overflow:hidden;
 }
 .login_head_box image{
   width: 100%;
@@ -22,6 +24,7 @@
   font-size: 4.27vw;
   border-radius: 2.1vw;
   color: #ffffff;
+  background: #222222
 }
 .wx_login_box button{
   width: 100%;
@@ -40,4 +43,51 @@
   display: inline-block;
   margin-right: 2.7vw;
   vertical-align: middle;
+}
+/* 弹层 */
+.login_layer_box{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: rgba(0,0,0,0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.login_main_layer{
+  width: 80%;
+  height: 40vw;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  margin-left: -40%;
+  margin-top:-20vw;
+  background: #fff;
+  border-radius: 1vw;
+  overflow: hidden;
+}
+.layer_title{
+  width: 100%;
+  text-align: center;
+  font-size: 4.27vw;
+  color: #666;
+  height: 25vw;
+  line-height: 25vw;
+}
+.layer_btn{
+  height: 15vw;
+  width: 100%;
+  
+  border-top: 1px solid #f2f2f2
+}
+.layer_btn button{
+  border: none;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  color: #7487ab;
+  font-size: 5.3vw;
+}
+button::after{
+  border: none;
 }

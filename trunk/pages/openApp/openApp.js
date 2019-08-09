@@ -18,9 +18,9 @@ Page({
   onReachBottom: function () {},
   /*** 用户点击右上角分享 */
   onShareAppMessage: function () {},
-  appDown:function(){
-    wx.navigateTo({
-      url: 'http://a.app.qq.com/o/simple.jsp?pkgname=shangche.club.geton',
-    })
-  }
+  // appDown:function(){
+  //   wx.navigateTo({
+  //     url: '../openMain/openMain',
+  //   })
+  // }
 })

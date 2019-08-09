@@ -1,21 +1,10 @@
 <!--pages/mineFocus/mineFocus.wxml-->
-<view class="mine_focue_box">
-  <image class="focue_head" mode='aspectFill' src="../../images/lixian.jpg"/>
-  <text>上车超跑</text>
+<view class="mine_focue_box" wx:for="{{list}}" wx:key="index" bindtap='focueFn' data-index="{{item.enterpriseId}}">
+  <image class="focue_head" mode='aspectFill' src="{{item.enterpriseLogo}}"/>
+  <view class="text_focus">
+    <view>{{item.enterpriseName}}</view>
+    <view>{{item.enterpriseSign}}</view>
+  </view>
   <image class="focue_right" src="../../images/icon_jian2.png"/>
 </view>
-<view class="mine_focue_box">
-  <image class="focue_head" mode='aspectFill' src="../../images/lixian.jpg"/>
-  <text>上车超跑</text>
-  <image class="focue_right" src="../../images/icon_jian2.png"/>
-</view>
-<view class="mine_focue_box">
-  <image class="focue_head" mode='aspectFill' src="../../images/lixian.jpg"/>
-  <text>上车超跑</text>
-  <image class="focue_right" src="../../images/icon_jian2.png"/>
-</view>
-<view class="mine_focue_box">
-  <image class="focue_head" mode='aspectFill' src="../../images/lixian.jpg"/>
-  <text>上车超跑</text>
-  <image class="focue_right" src="../../images/icon_jian2.png"/>
-</view>
+<navigator url="../openApp/openApp" class="open_app">APP内打开</navigator>

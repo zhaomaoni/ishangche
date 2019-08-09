@@ -1,2 +1,16 @@
 /**app.wxss**/
-
+/* 打开app */
+.open_app{ 
+  width: 32.5%;
+  height: 11.7vw;
+  line-height: 11.7vw;
+  text-align: center;
+  background: #060606;
+  color: #FFD98B;
+  position: fixed;
+  right: 0;
+  bottom: 39.2vw;
+  font-size: 4.3vw;
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+}

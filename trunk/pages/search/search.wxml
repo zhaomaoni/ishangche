@@ -1,0 +1,33 @@
+<!--pages/search/search.wxml-->
+<view class="search_head_box">
+  <image src="../../images/icon_search.png"/>
+  <input placeholder='搜索文章标题内容' confirm-type="search" focus="{{true}}" bindinput='searchFn' bindconfirm='btn_search'/>
+</view>
+<view class="search_no_box" hidden='{{isHide}}'>
+  <image src="../../images/icon_msg.png"/>
+  <text> 没有发现相关文章视频，推荐更多精彩资讯内容给您</text>
+</view>
+<!-- 展示搜索的内容 -->
+<view class="content_main_box" wx:for="{{list}}" wx:key="index" data-index="{{item.informationId}}" data-eid="{{item.enterpriseId}}" bindtap='mainJump'>
+  <view class="main_pic_box">
+    <image mode="aspectFit" src="{{item.informationPhoto}}"/>
+  </view>
+  <view class="main_title_box">{{item.informationTitle}}</view>
+  <view class="main_number_box">
+    <view class="number_type">
+      <view class="number_msg">
+        <image mode='aspectFit' src="../../images/icon_eye.png"/>
+        <text> {{item.pageViews}}</text>
+      </view>
+      <view class="number_msg">
+        <image mode='aspectFit' src="../../images/icon_ping1.png"/>
+        <text> {{item.comments}}</text>
+      </view>
+      <view class="number_msg">
+        <image mode='aspectFit' src="../../images/icon_zan1.png"/>
+        <text> {{item.likes}}</text>
+      </view>
+    </view>
+    <text class="main_from">{{item.enterpriseName}}</text>
+  </view>
+</view>

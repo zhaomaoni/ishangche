@@ -1,5 +1,8 @@
 /* pages/aDetails/aDetails.wxss */
 @import "/wxParse/wxParse.wxss";
+page{
+  position: relative
+}
 .header_top_box{
   width: 92%;
   margin: 0 auto;
@@ -64,21 +67,6 @@
   width: 92%;
   margin: 0 auto;
   margin-bottom:5vw;
-}
-.details_txt{
-  font-size: 3.73vw;
-  color: #333;
-}
-.details_img{
-  width: 100%;
-  height: 57.1vw;
-  border-radius: 2.13vw;
-  overflow: hidden;
-  margin: 2.7vw 0;
-}
-.details_img image{
-  width: 100%;
-  height: 100%;
 }
 .yue_du{
   width: 92%;
@@ -207,8 +195,73 @@
 .module_box .yellow{
   color: #FFD98B
 }
-
+.module_box button{
+  padding: 0;
+  height: 100%;
+  background:none;
+  line-height:inherit;
+}
+button::after{
+  border: 0
+}
 
 .details_content image{
   width: 100% !important;
+}
+/* 发表评论弹层 */
+.Boxbg{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+.ping_layer_box{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,0.5)
+}
+.ping_content_layer{
+  width: 100%;
+  min-height: 15.5vw;
+  position: absolute;
+  bottom: 0;
+  background: #ffffff;
+  align-items:center; 
+  display: -webkit-flex;
+}
+.ping_content_layer textarea{
+  width:73vw;
+  min-height: 4.6vw;
+  max-height: 18vw;
+  margin:2.25vw 4vw;
+  float:left;
+  background:#f0f0f0;
+  border-radius:2.13vw;
+  font-size:3.73vw;
+  line-height:5vw;
+  padding: 2vw 0;
+  padding-left:3vw;
+  overflow-y:hidden;
+  word-break:break-all;
+  word-wrap:break-word;
+}
+.ping_content_layer text{
+  width: 12vw;
+  height: 100%;
+  color: #333;
+  font-size: 4.27vw;
+  float: right;
+  margin-right: 4vw;
+}
+.layHide{
+  width: 100%;
+  height:90%;
+  position: fixed;
+  top: 0; 
+}
+.place-holder{
+  line-height: 10.7vw
 }

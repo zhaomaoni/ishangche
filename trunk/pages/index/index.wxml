@@ -2,7 +2,7 @@
 <view class="art_header">
   <view class="art_img">
     <navigator url="../mine/mine">
-      <image src='{{userLogo}}'></image>
+      <image src='{{userLogo}}' mode='aspectFill'></image>
     </navigator>
   </view>
   <view class="art_lis">
@@ -15,10 +15,13 @@
   </view>
 </view>
 <!-- 搜索框 -->
-<view class="index_search_box">
-  <image src="../../images/icon_search.png"/>
-  <input placeholder='搜索文章标题内容'/>
+<view class="search_top_fixed">
+  <view class="index_search_box" bindtap='searchFn'>
+    <image src="../../images/icon_search.png"/>
+    <input placeholder='搜索文章标题内容' disabled/>
+  </view>
 </view>
+
 <!-- tab内容 -->
   <!-- 文章咨询 -->
 <view class="art_main" wx:if="{{currentTab==0}}">

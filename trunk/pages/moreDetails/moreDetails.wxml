@@ -1,42 +1,53 @@
 <!--pages/moreDetails/moreDetails.wxml-->
-<view class="ping_lun_box">
+<view class="ping_lun_box {{isBlack ? 'ping_lun_box2' : ''}}"> <!---->
   <view class="no_have_ping" wx:if="{{isShow}}">还没有评论，快来请沙发～！</view>
   <view class="have_ping_box" wx:else>
     <view class="user_ping_box">
       <view class="ping_user_header">
-        <image src="../../images/icon.png"/>
+        <image src="{{list.userLogo}}"/>
       </view>
       <view class="ping_user_name">
-        <view class="user_name_msg">
-          <text>用户保时捷</text>
-          <text>47秒</text>
+        <view class="user_name_msg {{isBlack ? 'user_name_msg2':''}}">
+          <text>{{list.nickName}}</text>
+          <text>{{list.commentTime}}</text>
         </view>
-        <view class="first_user_ping">保时捷评论内容秒</view>
+        <view class="first_user_ping {{isBlack ? 'first_user_ping2':''}}">{{list.commentContent}}</view>
       </view>
     </view>
-    <view class="user_ping_box more_bg">
+    <view class="title_ping {{isBlack ? 'title_ping2':''}}">评论回复：</view>
+    <view class="user_ping_box" 
+          wx:for="{{secondCommentsList}}" 
+          wx:for-item="ind" 
+          wx:key="ind" 
+          bindlongpress="longTap" 
+          bindtouchstart="touchStart" 
+          bindtouchend="touchEnd" 
+          data-ids="{{ind.informationCommentId}}"
+          data-fromuserid="{{ind.fromUserId}}">
       <view class="ping_user_header">
-        <image src="../../images/icon.png"/>
+        <image src="{{ind.userLogo}}"/>
       </view>
       <view class="ping_user_name">
-        <view class="user_name_msg">
-          <text>用户保时捷</text>
-          <text>47秒</text>
+        <view class="user_name_msg {{isBlack ? 'user_name_msg2':''}}">
+          <text>{{ind.nickName}}</text>
+          <text>{{ind.commentTime}}</text>
         </view>
-        <view class="first_user_ping">保时捷评论内容秒</view>
-      </view>
-    </view>
-    <view class="user_ping_box more_bg">
-      <view class="ping_user_header">
-        <image src="../../images/icon.png"/>
-      </view>
-      <view class="ping_user_name">
-        <view class="user_name_msg">
-          <text>用户保时捷</text>
-          <text>47秒</text>
-        </view>
-        <view class="first_user_ping">保时捷评论内容秒</view>
+        <view class="first_user_ping {{isBlack ? 'first_user_ping2':''}}">{{ind.commentContent}}</view>
       </view>
     </view>
   </view>
+</view>
+<view class="ping_bottom_box {{isBlack ? 'ping_bottom_box2':''}}">
+  <view class="layHide"></view>
+  <textarea cursor-spacing='25' 
+            show-confirm-bar="{{false}}" 
+            bindinput='pingVal' 
+            bindblur='hideInput' 
+            fixed='true' 
+            placeholder='{{holder}}' 
+            contenteditable="true" 
+            auto-height="true" 
+            maxlength='1000'
+            value='{{pingVal}}'></textarea>
+  <text bindtap='btn_pingFn'>发送</text>
 </view>

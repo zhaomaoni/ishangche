@@ -1,14 +1,15 @@
 {
   "pages": [
-    "pages/loginAll/loginAll",
     "pages/index/index",
-    "pages/focus/focus",
     "pages/moreDetails/moreDetails",
+    "pages/focus/focus",
+    "pages/search/search",
     "pages/mineFocus/mineFocus",
     "pages/vDetails/vDetails",
     "pages/aDetails/aDetails",
-    "pages/openApp/openApp",
+    "pages/loginAll/loginAll",
     "pages/loginApp/loginApp",
+    "pages/openApp/openApp",
     "pages/mine/mine"
   ],
   "window": {

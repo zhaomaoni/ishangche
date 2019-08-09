@@ -1,6 +1,7 @@
 // pages/index/index.js
 var allapi = require("../../utils/comment.js")
 var conf = require('../../utils/config.js')
+var userUtil = require('../../utils/userUtil.js')
 Page({
   /*** 页面的初始数据 */
   data: {
@@ -8,14 +9,14 @@ Page({
     header: ["车主访谈", "视频资讯"],
     currentTab: 0,
     currentPage:1,
-    loadMoreIs: true,
+    loadMoreIs: true, //是否下拉
     zanImg: "../../images/icon_zan2.png",
     list:[],
     userLogo:""
   },
   /*** 生命周期函数--监听页面加载 */
   onLoad: function (options) {
-    this.listDataFn(this.data.currentTab,this.data.currentPage)
+    this.listDataFn(this.data.currentTab, this.data.currentPage)
   },
   /* 获取数据 */
   listDataFn: function (currentTab,currentPage){
@@ -32,7 +33,7 @@ Page({
         inputParamJson: {
           pageSize: "10",
           currentPage: currentPage++,
-          userId: "", //12346046
+          userId: userUtil.getUserId(), 
           type: currentTab
         }
       },
@@ -54,7 +55,6 @@ Page({
           loadMoreIs: res.data.informationList.length == 10,
           userLogo: res.data.userLogo
         })
-        console.log(_this.data.list)
         wx.hideLoading()
         // 隐藏导航栏加载框
         wx.hideNavigationBarLoading();
@@ -85,21 +85,48 @@ Page({
     }
   },
   /*** 生命周期函数--监听页面初次渲染完成 */
-  onReady: function () { },
+  onReady: function () {},
   /*** 生命周期函数--监听页面显示 */
-  onShow: function () { },
+  onShow: function () {},
+
+  changeData: function () {
+    this.onLoad();//刷新上级页面
+  },
+  
   /*** 生命周期函数--监听页面隐藏 */
   onHide: function () { },
   /*** 生命周期函数--监听页面卸载 */
   onUnload: function () { },
   /*** 页面相关事件处理函数--监听用户下拉动作 */
-  onPullDownRefresh: function () { },
+  onPullDownRefresh: function () {
+    this.setData({
+      currentPage:1
+    })
+    this.listDataFn(this.data.currentTab, this.data.currentPage)
+  },
   /*** 页面上拉触底事件的处理函数 */
   onReachBottom: function () {
     this.listDataFn(this.data.currentTab,this.data.currentPage)
   },
   /*** 用户点击右上角分享 */
-  onShareAppMessage: function () { },
+  onShareAppMessage: function () {
+    var _this = this;
+    wx.showShareMenu({
+      withShareTicket: true
+    })
+    allapi.postFormRequestAll(conf.allUrl.mainShare, {
+      channel: "02",
+      sessionId: "",
+      systemVersion: "1.0",
+      inputParamJson: {
+        type: "1",
+        informationId: _this.data.informationId,
+        userId: userUtil.getUserId()
+      }
+    }, function (res) {
+      console.log("分享成功")
+    })
+  },
   //tab导航切换
   currentBtn: function (e) {
     var _this = this;
@@ -137,6 +164,12 @@ Page({
     var index = e.currentTarget.dataset.index;
     wx.navigateTo({
       url: '../vDetails/vDetails?index='+index
+    })
+  },
+  // 跳转至搜索页
+  searchFn:function(){
+    wx.navigateTo({
+      url: '../search/search',
     })
   }
 })

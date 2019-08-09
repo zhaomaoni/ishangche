@@ -5,11 +5,14 @@
     <text>我的</text>
   </view>
   <view class="mine_login_box">
-    <image class="mine_login_head" src="../../images/icon_head.png"/>
+    <image class="mine_login_head" src="{{avatarUrl}}"/>
     <text class="noNumber" wx:if="{{isShow}}" bindtap='loginNav'>用户未登录</text>
     <view class="yesNumber" wx:else>
-      <text>帅的一匹</text>
-      <text>上车号：{{scNumber}}</text>
+      <view>{{nickName}}</view>
+      <view wx:if="{{scNumber!=''}}">上车号：{{scNumber}}</view>
+      <view wx:else class="btnLogin">
+        <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">手机号码未验证：请点击完善信息</button>
+      </view>
     </view>
   </view>
 </view>
@@ -21,7 +24,8 @@
   <image src="../../images/icon_jian2.png"/>
   <text>下载上车</text>
 </view>
-<view class="mine_list_btn" wx:if="{{!isShow}}">
+<view class="mine_list_btn" wx:if="{{!isShow}}" bindtap='loginOut'>
   <image src="../../images/icon_jian2.png"/>
   <text>退出登录</text>
 </view>
+<navigator url="../openApp/openApp" class="open_app">APP内打开</navigator>

@@ -1,7 +1,16 @@
 /* pages/moreDetails/moreDetails.wxss */
 .ping_lun_box{
   width: 100%;
-  margin-bottom: 25vw
+  margin-bottom: 25vw;
+}
+.ping_lun_box2{
+  height:80%;
+  position:fixed;
+  top:0;
+  left:0;
+  padding-bottom:30vw;
+  overflow-y:scroll;
+  background:#222;
 }
 .no_have_ping{
   text-align: center;
@@ -12,7 +21,7 @@
 .have_ping_box{
   width: 100%;
   overflow: hidden;
-  margin-top:5.3vw;
+  padding-top:5.3vw;
 }
 .user_ping_box{
   width: 92%;
@@ -35,6 +44,7 @@
   flex: 1;
   width: 100%;
   overflow: hidden;
+  margin-right:7vw;
 }
 .user_name_msg{
   font-size: 3.73vw;
@@ -45,6 +55,10 @@
 .user_name_msg text{
   display: block;
 }
+.user_name_msg2 text{
+  display: block;
+  color: #888
+}
 .user_name_msg text:last-child{
   font-size: 2.7vw;
   color: #888
@@ -53,6 +67,14 @@
   font-size: 4.27vw;
   margin-bottom: 4vw;
   color: #333;
+  text-align: justify;
+}
+.first_user_ping2{
+  color: #888;
+  
+}
+.first_user_ping3{
+  color: #b6b6b6
 }
 .three_ping_msg{
   width: 100%;
@@ -85,4 +107,62 @@
   margin-bottom:1vw;
   padding:3.2vw 4%;
   width:100%;
+}
+.more_bg2{
+  background: #2F2F2F;
+  margin-bottom:1vw;
+  padding:3.2vw 4%;
+  width:100%;
+}
+.title_ping{
+  color: #333;
+  margin-left: 4%;
+  font-size:3.2vw;
+  margin-bottom:4vw;
+}
+.title_ping2{
+  color: #888
+}
+/* 评论框 */
+.ping_bottom_box{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  align-items:center; 
+  display: -webkit-flex;
+  background: #ffffff;
+}
+.ping_bottom_box textarea{
+  width:73vw;
+  height:11vw;
+  max-height: 18vw;
+  margin:2.25vw 4vw;
+  float:left;
+  background:#f0f0f0;
+  border-radius:2.13vw;
+  font-size:3.73vw;
+  line-height:5vw;
+  padding: 3vw 0;
+  padding-left:3vw;
+  
+}
+.ping_bottom_box text{
+  width: 12vw;
+  height: 100%;
+  color: #333;
+  font-size: 4.27vw;
+  float: right;
+  margin-right: 4vw;
+}
+.ping_bottom_box2{
+  background: #222222;
+}
+.ping_bottom_box2 textarea{
+  background: #2f2f2f;
+  color: #ffffff
+}
+.ping_bottom_box2 text{
+  color: #ffffff
 }

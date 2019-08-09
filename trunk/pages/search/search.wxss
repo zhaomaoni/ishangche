@@ -1,49 +1,26 @@
-/* 个人信息详情 */
-.focus_user_box{
-  width: 100%;
-  height: auto;
-  overflow: hidden;
-}
-.focus_head_box{
-  width: 15.5vw;
-  height: 15.5vw;
+/* pages/search/search.wxss */
+.search_head_box{
+  width: 85%;
   margin: 0 auto;
-  position: relative;
-  margin-top: 5.3vw;
+  background: #f6f6f6;
+  height: 9.6vw;
+  line-height: 9.6vw;
+  border-radius: 4.8vw;
+  display: flex;
+  margin-bottom: 5vw;
 }
-.focus_head_box .focus_pic1{
-  width: 100%;
+.search_head_box image{
+  width: 3.2vw;
+  height: 3.2vw;
+  margin: 3.2vw 1.3vw 3.2vw 6.7vw;
+}
+.search_head_box input{
+  flex: 1;
   height: 100%;
-  border-radius: 100%;
-}
-.focus_head_box .focus_pic2{
-  width: 4.27vw;
-  height: 4.27vw;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-}
-.title_focus_box{
-  width: 100%;
-  font-size: 4.27vw;
-  padding: 2vw 0;
-  text-align: center;
-}
-.main_focus_box{
-  width: 100%;
-  color: #999999;
   font-size: 3.2vw;
-  text-align: center;
-  margin-bottom: 8vw;
+  color: #333;
 }
-/* 历史资讯 */
-.content_title{
-  width: 92%;
-  margin: 0 auto;
-  font-size: 4.27vw;
-  text-indent: 1.87vw;
-  margin-bottom: 4vw;
-}
+/* 搜索详情展示 */
 .content_main_box{
   width: 92%;
   margin: 0 auto;
@@ -57,6 +34,10 @@
   border-radius: 4.27vw;
   overflow: hidden;
   margin-bottom: 2.7vw;
+}
+.main_pic_box image{
+  width: 100%;
+  height: 100%;
 }
 .main_title_box{
   width: 100%;
@@ -93,4 +74,20 @@
   width: 3.72vw;
   height: 3.73vw;
   vertical-align: middle;
+}
+/* 没有搜索到内容提示 */
+.search_no_box{
+  width: 92%;
+  height: 5vw;
+  line-height: 5vw;
+  margin: 0 auto;
+  margin-bottom: 5vw;
+}
+.search_no_box image{
+  width: 3.73vw;
+  height: 3.73vw;
+}
+.search_no_box text{
+  font-size: 3.73vw;
+  color: #666;
 }

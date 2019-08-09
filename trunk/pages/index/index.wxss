@@ -4,6 +4,10 @@
   height: 11.7vw;
   line-height: 11.7vw;
   overflow: hidden;
+  position:fixed;
+  top:0;
+  background: #ffffff;
+  z-index: 999
 }
 .art_img{
   width: 10.13vw;
@@ -37,7 +41,7 @@
 .art_main{
   width: 92%;
   margin: 0 auto;
-  margin-top: 6.7vw;
+  margin-top: 31.9vw;
 }
 /* 资讯列表 */
 .art_content_box{
@@ -190,6 +194,14 @@
   margin-top: -8vw;
 }
 /* 搜索框 */
+.search_top_fixed{
+  position: fixed;
+  top: 11.7vw;
+  width: 100%;
+  height: auto;
+  z-index: 999;
+  background: #ffffff;
+}
 .index_search_box{
   width: 92%;
   height: 9.6vw;
