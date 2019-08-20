@@ -7,4 +7,4 @@
   </view>
   <image class="focue_right" src="../../images/icon_jian2.png"/>
 </view>
-<navigator url="../openApp/openApp" class="open_app">APP内打开</navigator>
+<!-- <navigator url="../openApp/openApp" class="open_app">APP内打开</navigator> -->

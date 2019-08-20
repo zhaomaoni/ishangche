@@ -1,0 +1,26 @@
+<!--pages/apply/apply.wxml-->
+<view class="msg_apple_box">
+  <view><text>专访条件：</text>限上车认证车辆用户参加。</view>
+  <view><text>专访内容：</text>您的爱车、事业、兴趣爱好等开放性问题为主要内容。</view>
+  <view><text>专访形式：</text>主要以视频拍摄或电话语音形式。</view>
+  <view>注：申请通过之后，上车相关工作人员会在24小时内与您联系。</view>
+</view>
+<view class="apply_inp">
+  <view class="inp_txt num_txt"><text>*</text>手机号：</view>
+  <input placeholder='请输入您的手机号' bindblur='telphone'/>
+</view>
+<view class="apply_inp">
+  <view class="inp_txt num_txt">微信号：</view>
+  <input placeholder='请输入您的微信号' bindinput='wechatNum'/>
+</view>
+<view class="apply_inp">
+  <view class="inp_txt num_txt"><text>*</text>您的爱车：</view>
+  <input placeholder='如：玛莎拉蒂总裁' bindblur='telphone1'/>
+</view>
+<!-- <view class="apply_area">
+  <view class="apple_txt"><text>*</text>申请描述：</view>
+  <textarea minlength="{{min}}" maxlength="{{max}}" bindinput="inputs">
+    <text class="currentWordNumber">{{currentWordNumber|0}}/{{max}}</text>
+  </textarea>
+</view> -->
+<view class="submitBtn" bindtap='submitBtn'>提交申请</view>

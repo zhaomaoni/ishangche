@@ -3,7 +3,7 @@
   <image src="{{avatarUrl}}"/>
 </view>
 <view class="login_number_inp">
-  <input class="textInp" type="text" bindinput="username" placeholder='请输入手机号火上车号'/>
+  <input class="textInp" type="text" bindinput="username" placeholder='请输入手机号或上车号'/>
   <input class="pwdInp" type="password" bindinput="pwdFn" placeholder='请输入密码'/>
 </view>
 <view class="login_sure_btn" bindtap='loginFn'>确定</view>

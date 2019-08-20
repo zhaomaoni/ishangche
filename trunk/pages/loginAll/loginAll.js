@@ -59,23 +59,63 @@ Page({
       wx.login({
         success: function (ost) {
           var code = ost.code; //返回code
+          console.log(code)
           var appId = "wx318e835965bbc541";
           var secret = "60eb50d424568f3ba118c33c04290f10"
-          wx.request({
+          allapi.postFormRequestAll(conf.allUrl.getUserInfo,{
+            channel: "02",
+            sessionId: "",
+            systemVersion: "1.0",
+            inputParamJson: {
+              code:code
+            }
+          },function(res){
+            console.log(res)
+            _this.setData({
+              unionId: res.data.unionId
+            })
+            wx.getUserInfo({
+              success: function (msg) {
+                console.log(msg)
+              }
+            })
+            var openid = res.data.openId //返回openid
+            var session_key = res.data.sessionKey;
+            userUtil.setOpenid(res.data.openId)
+            userUtil.setSessionKey(res.data.sessionKey)
+            console.log(userUtil.getSessionKey())
+            _this.setData({
+              openid: openid,
+              session_key: session_key
+            })
+            _this.loginFn(openid)
+          })
+
+          /*wx.request({
             url: 'https://api.weixin.qq.com/sns/jscode2session?appid=' + appId + '&secret=' + secret + '&js_code=' + code + '&grant_type=authorization_code',
             data: {},
             success: function (res) { //根据code获取openid等信息
+              console.log(res)
+              _this.setData({
+                unionId: res.data.unionid
+              })
+              wx.getUserInfo({
+                success:function(msg){
+                  console.log(msg)
+                }
+              })
               var openid = res.data.openid //返回openid
               var session_key = res.data.session_key;
               userUtil.setOpenid(res.data.openid)
               userUtil.setSessionKey(res.data.session_key)
+              console.log(userUtil.getSessionKey())
               _this.setData({
                 openid : openid,
                 session_key : session_key
               })
               _this.loginFn(openid)
             }
-          })
+          })*/
         }
       })
     } else {
@@ -109,9 +149,7 @@ Page({
           isShow:true
         })
       }else if(type == "S"){
-       
         userUtil.setUserName(res.data.nickName)  //将名称存储与本地
-        console.log(userUtil.getUserName())
         userUtil.setUserHead(res.data.userLogo) //将头像存储与本地
         userUtil.setUserType(res.data.returnCode.message) //将提示存储于本地
         userUtil.setBirthday(res.data.birthday) //将生日存储与本地
@@ -182,9 +220,10 @@ Page({
       inputParamJson: {
         phone: phoneNum,
         nickName: _this.data.nickName,
+        gender: _this.data.gender,
         userLogo: _this.data.avatarUrl,
         openId: _this.data.openid,
-        gender: _this.data.gender
+        unionId: _this.data.unionId
       }
     }, function (msg) {
       var message = msg.data.returnCode.message;

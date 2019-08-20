@@ -32,7 +32,7 @@ page{
   border-radius: 2px;
 }
 .active_guan{
-  background: #bbb;
+  background: #6D6D6D;
 }
 .head_user_msg{
   flex: 1;
@@ -58,6 +58,7 @@ page{
   line-height: 4.9vw;
   font-size: 3.7vw;
   color: #fff;
+  padding-bottom:2px;
 }
 .user_name .user_sign{
   overflow: hidden;
@@ -108,12 +109,31 @@ page{
   overflow: hidden;
   position: relative;
 }
-.about_dls_main .about_img{
+.veido_pic_box{
   width: 32vw;
   height: 100%;
   float: left;
   border-radius: 2.13vw;
   margin-right: 4vw;
+  position: relative;
+  overflow: hidden
+}
+.veido_pic_box .about_img{
+  width: 100%;
+  height: 100%
+}
+.veido_pic_box .video-cover{
+  width: 100%;
+  height: 100%;
+}
+.veido_pic_box .video-play-btn{
+  width:10vw;
+  height:10vw;
+  position:absolute;
+  left:50%;
+  top:50%;
+  margin-left:-5vw;
+  margin-top:-5vw;
 }
 .about_msg_box{
   height: 100%;
@@ -144,7 +164,7 @@ page{
 .ping_lun_title{
   font-size: 4.27vw;
   color: #fff;
-  font-weight: 500
+  font-weight: 500;
 }
 .no_have_ping{
   text-align: center;
@@ -242,15 +262,16 @@ page{
 .module_box image{
   width: 6.4vw;
   height: 6.4vw;
-  margin-top: 3vw
+  margin-top: 1.5vw
 }
 .module_box text{
   display: block;
   font-size: 2.7vw;
   color: #999;
+  margin-top:-2px;
 }
 .module_box .yellow{
-  color: #FFD98B
+  color: #FFC23E
 }
 .module_box button{
   padding: 0;
@@ -293,8 +314,8 @@ button::after{
   display: -webkit-flex;
 }
 .ping_content_layer textarea{
-  width:73vw;
-  height:11vw;
+  width:70vw;
+  min-height: 9.67vw !important;
   max-height: 18vw;
   margin:2.25vw 4vw;
   float:left;
@@ -302,8 +323,7 @@ button::after{
   border-radius:2.13vw;
   font-size:3.73vw;
   line-height:5vw;
-  padding: 3vw 0;
-  padding-left:3vw;
+  padding:1vw 3vw 0 3vw;
   overflow-y:hidden;
   word-break:break-all;
   word-wrap:break-word;

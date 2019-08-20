@@ -10,7 +10,8 @@ Page({
     pageSize: "10",
     loadMoreIs: true,
     list: [],
-    isHide: true
+    isHide: true,
+    playIndex: null,//用于记录当前播放的视频的索引值
   },
   /*** 生命周期函数--监听页面加载 */
   onLoad: function (options) { },
@@ -23,7 +24,16 @@ Page({
   /*** 生命周期函数--监听页面卸载 */
   onUnload: function () { },
   /*** 页面相关事件处理函数--监听用户下拉动作 */
-  onPullDownRefresh: function () { },
+  onPullDownRefresh: function () {
+    wx.showLoading({
+      title: '加载中',
+    })
+    this.setData({
+      currentPage:1
+    })
+    this.buildHistory(this.data.valTxt)
+    wx.hideLoading()
+  },
   /*** 页面上拉触底事件的处理函数 */
   onReachBottom: function () {
     this.buildHistory(this.data.valTxt)
@@ -40,7 +50,10 @@ Page({
   },
   //搜索确认事件
   btn_search: function (e) {
-    console.log(this.data.valTxt)
+    this.setData({
+      isHide:true,
+      currentPage: 1
+    })
     if (e.detail.value == "") {
       wx.showModal({
         title: '提示',
@@ -50,6 +63,8 @@ Page({
       return;
     }
     this.setData({
+      loadMoreIs:true,
+      list:[],
       valTxt: e.detail.value
     })
     this.buildHistory(e.detail.value)//调用历史记录事件
@@ -71,27 +86,17 @@ Page({
         title: valTxt
       }
     }, function (res) {
-      console.log(res)
+      // console.log(res.data)
       var listArr = res.data.informationList;
-      var listNum = listArr;
-      if (res.data.type == 1) {  //type==1 无数据  ==0 有数据
+      if (_this.data.loadMoreIs == false) {
         _this.setData({
-          isHide: false
+          currentPage: _this.data.currentPage++,
+          list: listArr,
         })
       } else {
-        if (_this.data.loadMoreIs == false) {
-          _this.setData({
-            list: listArr,
-            currentPage: _this.data.currentPage++
-          })
-        } else {
-          _this.setData({
-            currentPage: _this.data.currentPage++,
-            list: _this.data.list.concat(listNum)
-          })
-        }
         _this.setData({
-          isHide: true
+          currentPage: _this.data.currentPage++,
+          list: _this.data.list.concat(listArr)
         })
       }
       _this.setData({
@@ -102,13 +107,30 @@ Page({
       wx.hideNavigationBarLoading();
       // 停止下拉动作
       wx.stopPullDownRefresh();
+
+      if (res.data.type == 1) {  //type==1 无数据  ==0 有数据
+        _this.setData({
+          isHide:false
+        })
+      } else {
+        _this.setData({
+          isHide: true
+        })
+      }
     })
   },
-  //跳转至详情页
+  //跳转至文章详情页
   mainJump: function (e) {
     var index = e.currentTarget.dataset.index
     wx.navigateTo({
       url: '../aDetails/aDetails?index=' + index,
+    })
+  },
+  //跳转至视频详情页
+  mainJump2: function (e) {
+    var index = e.currentTarget.dataset.index
+    wx.navigateTo({
+      url: '../vDetails/vDetails?index=' + index,
     })
   }
 })

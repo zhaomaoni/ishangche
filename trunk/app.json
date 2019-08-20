@@ -1,16 +1,17 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/moreDetails/moreDetails",
-    "pages/focus/focus",
     "pages/search/search",
-    "pages/mineFocus/mineFocus",
+    "pages/mine/mine",
+    "pages/apply/apply",
+    "pages/focus/focus",
     "pages/vDetails/vDetails",
     "pages/aDetails/aDetails",
     "pages/loginAll/loginAll",
     "pages/loginApp/loginApp",
-    "pages/openApp/openApp",
-    "pages/mine/mine"
+    "pages/mineFocus/mineFocus",
+    "pages/moreDetails/moreDetails",
+    "pages/templates/foot"
   ],
   "window": {
     "backgroundTextStyle": "light",

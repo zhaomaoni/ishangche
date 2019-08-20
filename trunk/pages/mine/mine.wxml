@@ -1,7 +1,8 @@
 <!--pages/mine/mine.wxml-->
+<import src="../templates/foot.wxml"/>
 <view class="mine_header_box">
   <view class="nav_head_box" mode="aspectFill" style="padding-top:{{statusBarHeight}}px">
-    <image src="../../images/icon_back2.png" bindtap='histroyBack'/>
+    <!-- <image src="../../images/icon_back2.png" bindtap='histroyBack'/> -->
     <text>我的</text>
   </view>
   <view class="mine_login_box">
@@ -28,4 +29,27 @@
   <image src="../../images/icon_jian2.png"/>
   <text>退出登录</text>
 </view>
-<navigator url="../openApp/openApp" class="open_app">APP内打开</navigator>
+<!-- <navigator url="../openApp/openApp" class="open_app">APP内打开</navigator> -->
+<template is="footer" data="{{isTab}}"/>
+<!--  hidden='{{isLay}}' -->
+<view class="open_app_layer" hidden='{{isLay}}'>
+  <view class="layHide" bindtap='layHideFn'></view>
+  <view class="open_app_main">
+    <view class="app_main_top">
+      <image class="bgImg" mode="aspectFill" src="../../images/bg_2.jpg"></image>
+      <view class="icon_car">
+        <image class="icon" mode="aspectFill" src="../../images/icon2.png"></image>
+        <image class="txtPic" mode='aspectFit' src="../../images/bg_3.png"></image>
+      </view>
+    </view>
+    <view class="app_main_bottom">
+      <view class="app_title">
+        <text>上车 - </text>高端车友俱乐部
+      </view>
+      <view class="app_txt">请复制链接，并在手机浏览器中粘贴打开<br/>或者直接在应用市场搜索下载上车app</view>
+      <view class="app_btn" data-url="http://www.ishangche.net/download.html" bindtap='copyText'>
+        <image src="../../images/icon_btn2.png"></image>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,4 +1,5 @@
 /* pages/mine/mine.wxss */
+@import "../templates/foot.wxss";
 /* 自定义背景 */
 .mine_header_box{
   width: 100%;
@@ -33,20 +34,20 @@
 /* 登陆信息 */
 .mine_login_box{
   width: 100%;
-  height: 15.5vw;
+  height: 13.3vw;
   position: relative;
   margin-top: 7.7vw;
   overflow: hidden;
   display: flex
 }
 .mine_login_box .mine_login_head{
-  width: 15.5vw;
+  width: 13.3vw;
   height: 100%;
-  margin-left: 11.7vw;
+  margin-left: 5.3vw;
   border-radius: 100%;
 }
 .mine_login_box .noNumber{
-  line-height: 15.5vw;
+  line-height: 13.3vw;
   margin-left: 3.73vw;
   color: #999999;
   font-size: 4.27vw;
@@ -54,18 +55,19 @@
 .mine_login_box .yesNumber{
   color: #fff;
   font-size: 4.27vw;
-  margin-left: 3.73vw;
+  margin-left: 2.7vw;
   flex: 1;
   margin-right:10vw;
 }
 .mine_login_box .yesNumber view{
   display: block;
-  padding-top: 2vw;
+  padding-top: 1vw;
 }
 .mine_login_box .yesNumber view:last-child{
-  font-size: 2.9vw;
+  font-size: 2.7vw;
   height: 6vw;
   color: rgba(255,255,255,0.7);
+  padding-top: 1.2vw;
 }
 /* 点击跳转 */
 .mine_list_btn{
@@ -101,4 +103,103 @@
 }
 button::after{
   border: 0;
+}
+
+/* 下载app弹层 */
+.open_app_layer{
+  width:100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 9999
+}
+.layHide{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+}
+.open_app_main{
+  width: 84%;
+  height: 67.4vh;
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  margin-left: -42%;
+  background: #ffffff;
+  border-radius: 4.27vw;
+  overflow: hidden;
+}
+.app_main_top{
+  width: 100%;
+  height: 58%;
+  overflow: hidden;
+  background: #070707;
+}
+.app_main_top .bgImg{
+  width: 100%;
+  height: 100%;
+}
+.app_main_bottom{
+  height: 42%;
+  overflow: hidden;
+}
+.app_main_bottom .app_title{
+  width: 62.54vw;
+  margin: 0 auto;
+  height: 8.5vw;
+  line-height: 8.5vw;
+  margin-top: 5.3vw;
+  overflow: hidden;
+  color: #333;
+  font-size: 4.27vw;
+  text-align:center;
+}
+.app_title image{
+  width: 8.5vw;
+  height: 8.5vw;
+  float: left;
+  margin-right: 1.6vw;
+}
+.app_title text{
+  font-size: 4.8vw;
+  font-weight: 500
+}
+.app_btn{
+  width: 53.3vw;
+  height: 11.2vw;
+  margin: 0 auto
+}
+.app_btn image{
+  width: 100%;
+  height: 100%
+}
+.app_txt{
+  width: 73.3vw;
+  margin: 0 auto;
+  color: #555;
+  font-size: 3.5vw;
+  text-align: center;
+  margin-top: 4vw;
+  margin-bottom: 6.7vw
+}
+.icon_car{
+  width: 12.8vw;
+  position: absolute;
+  top: 5.6vw;
+  left: 50%;
+  margin-left: -6.4vw;
+}
+.icon_car .icon{
+  width: 12.8vw;
+  height: 12.8vw;
+  display: block
+}
+.icon_car .txtPic{
+  width: 11.7vw;
+  height: 4.27vw;
+  display: block;
+  margin: 0 auto;
 }

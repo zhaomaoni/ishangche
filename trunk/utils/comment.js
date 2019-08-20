@@ -14,18 +14,18 @@ module.exports.postFormRequestAll = function (url1, data, success_callback, erro
 }
 /* 处理通用get请求 */
 var getRequest = function (url, success_callback, error_callback) {
-  showLoading()
+  // showLoading()
   wx.request({
     url: url,
     method: 'GET',
     success: function (res) {
-      hideLoading()
+      // hideLoading()
       if (success_callback) {
         success_callback(res)
       }
     },
     fail: function (res) {
-      hideLoading()
+      // hideLoading()
       if (error_callback) {
         error_callback(res)
       }
@@ -37,20 +37,20 @@ var getRequest = function (url, success_callback, error_callback) {
 }
 /* 处理通用post，form请求 */
 var postFormRequest = function (urls, data, success_callback, error_callback) {
-  showLoading()
+  // showLoading()
   wx.request({
     url: urls,
     method: 'POST',
     data: data,
     success: function (res) {
-      hideLoading()
+      // hideLoading()
       //注意：可以对参数解密等处理 
       if (success_callback) {
         success_callback(res)
       }
     },
     fail: function (res) {
-      hideLoading()
+      // hideLoading()
       if (error_callback) {
         error_callback(res)
       }

@@ -72,7 +72,6 @@ Page({
   onShareAppMessage: function () {},
   //点击跳转至详情页
   focueFn:function(e){
-    console.log(e.currentTarget.dataset.index)
     var enterpriseid = e.currentTarget.dataset.index;
     wx.navigateTo({
       url: '../focus/focus?enterpriseid=' + enterpriseid,

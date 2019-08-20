@@ -9,6 +9,8 @@ Page({
     isShow:true,
     nickName: "",
     scNumber: "",
+    isTab:1,
+    isLay:true,
     avatarUrl: "../../images/icon_head.png"
   },
   /*** 生命周期函数--监听页面加载 */
@@ -31,6 +33,19 @@ Page({
     if (userUtil.getScIdNum() != '') { //有上车号时 展示上车号
       _this.setData({
         scNumber: userUtil.getScIdNum()
+      })
+    }
+  },
+  // 底部切换
+  footFn: function (e) {
+    var index = e.currentTarget.dataset.index;
+    var url = e.currentTarget.dataset.url;
+    if (this.data.isTab != index) {
+      wx.reLaunch({
+        url: url,
+      })
+      this.setData({
+        isTab: index
       })
     }
   },
@@ -110,7 +125,8 @@ Page({
         userUtil.setVipType(msg.data.vipType) //将vipType存储与本地
         _this.setData({
           avatarUrl: userUtil.getUserHead(),
-          nickName: userUtil.getUserName()
+          nickName: userUtil.getUserName(),
+          scNumber: userUtil.getScIdNum()
         })
       } else {
         wx.showModal({
@@ -170,13 +186,13 @@ Page({
   },
   //点击 关注 跳转至关注列表
   mineFocue:function(){
-    if(this.data.isShow!=true){
+    if(userUtil.getScIdNum()!=""){
       wx.navigateTo({
         url: '../mineFocus/mineFocus',
       })
     }else{
       wx.showModal({
-        content: '请登陆后再进行查看',
+        content: '请登录后再进行查看',
         showCancel:false,
         success:function(res){
           wx.navigateTo({
@@ -188,8 +204,37 @@ Page({
   },
   //点击 下载上车 跳转至下载页
   downApp:function(){
-    wx.navigateTo({
-      url: '../openApp/openApp',
+    // wx.navigateTo({
+    //   url: '../openApp/openApp',
+    // })
+    this.setData({
+      isLay:false
+    })
+  },
+  //点击复制链接
+  copyText: function (e) {
+    console.log(e)
+    var _this = this;
+    wx.setClipboardData({
+      data: e.currentTarget.dataset.url,
+      success: function (res) {
+        wx.getClipboardData({
+          success: function (res) {
+            wx.showToast({
+              title: '复制成功'
+            })
+            _this.setData({
+              isLay: true
+            })
+          }
+        })
+      }
+    })
+  },
+  //关闭弹层
+  layHideFn:function(){
+    this.setData({
+      isLay:true
     })
   },
   //点击 用户未登录 跳转至登陆页

@@ -1,5 +1,6 @@
 {
   "backgroundTextStyle": "light",
   "navigationBarBackgroundColor": "#222",
-  "navigationBarTextStyle": "white"
+  "navigationBarTextStyle": "white",
+  "navigationBarTitleText": "视频详情"
 }

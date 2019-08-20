@@ -11,6 +11,7 @@ Page({
     currentPage:"1",
     loadMoreIs: true, //是否下拉
     hisList:[],
+    isLoad: false,
     enterpriseid:""
   },
   /*** 生命周期函数--监听页面加载 */
@@ -35,14 +36,13 @@ Page({
         userId: userUtil.getUserId()
       }
     }, function (res) {
-      _this.setData({
-        userMsg: res.data
+      wx.setNavigationBarTitle({
+        title: res.data.enterpriseName,    //页面标题
       })
-      if (res.data.follow==1){
-        _this.setData({
-          focusImg:"../../images/icon_focusYes.png"
-        })
-      }
+      _this.setData({
+        userMsg: res.data,
+        follow:res.data.follow
+      })
     })
   },
   //获取历史资讯信息
@@ -52,6 +52,9 @@ Page({
       wx.hideLoading()
       return;
     }
+    this.setData({
+      isLoad: true
+    })
     allapi.postFormRequestAll(conf.allUrl.enterpriseInformations, {
       channel: "02",
       sessionId: "",
@@ -63,16 +66,17 @@ Page({
         userId: userUtil.getUserId()
       }
     }, function (res) {
-      console.log(res.data.informationList)
       var listArr = res.data.informationList;
       var listNum = listArr;
       if (_this.data.loadMoreIs == false) {
         _this.setData({
           hisList: listNum,
+          isLoad: false,
           currentPage: currentPage++
         })
       } else {
         _this.setData({
+          isLoad: false,
           currentPage: currentPage++,
           hisList: _this.data.hisList.concat(listNum)
         })
@@ -87,11 +91,18 @@ Page({
       wx.stopPullDownRefresh();
     })
   },
-  //点击进入详情页
+  //点击进入文章详情页
   jumpFn:function(e){
     var index = e.currentTarget.dataset.index;
     wx.navigateTo({
       url: '../aDetails/aDetails?index=' + index
+    })
+  },
+  //点击进入视频详情页
+  jumpFn2: function (e) {
+    var index = e.currentTarget.dataset.index;
+    wx.navigateTo({
+      url: '../vDetails/vDetails?index=' + index
     })
   },
   //是否关注
@@ -100,17 +111,30 @@ Page({
     var id = e.currentTarget.dataset.index;
     console.log(e)
     var _this = this;
-    if (this.data.follow == 1) {
-      this.unFollowEnterprise(id)
-      this.setData({
-        follow: 0
-      })
-    } else {
-      this.followEnterprise(id)
-      this.setData({
-        follow: 1
+    if (userUtil.getScIdNum()!=""){
+      if (this.data.follow == 1) {
+        this.unFollowEnterprise(id)
+        this.setData({
+          follow: 0
+        })
+      } else {
+        this.followEnterprise(id)
+        this.setData({
+          follow: 1
+        })
+      }
+    }else{
+      wx.showModal({
+        content: '请登录后再进行查看',
+        showCancel: false,
+        success: function (res) {
+          wx.navigateTo({
+            url: '../loginAll/loginAll',
+          })
+        }
       })
     }
+    
   },
   //关注
   followEnterprise: function (enterpriseid) {
@@ -149,7 +173,17 @@ Page({
   /*** 生命周期函数--监听页面卸载 */
   onUnload: function () {},
   /*** 页面相关事件处理函数--监听用户下拉动作 */
-  onPullDownRefresh: function () {},
+  onPullDownRefresh: function () {
+    var _this = this;
+    this.setData({
+      currentPage: 1,
+      hisList:[]
+    })
+    wx.stopPullDownRefresh();
+    setTimeout(function () {
+      _this.historyFn(_this.data.pageSize, _this.data.currentPage, _this.data.enterpriseid)
+    }, 500);
+  },
   /*** 页面上拉触底事件的处理函数 */
   onReachBottom: function () {
     this.historyFn(this.data.pageSize, this.data.currentPage, this.data.enterpriseid)

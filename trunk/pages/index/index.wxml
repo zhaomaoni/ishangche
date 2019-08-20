@@ -1,111 +1,130 @@
 <!-- tab导航 -->
+<wxs module="filter" src="../../utils/date.wxs"></wxs>
+<import src="../templates/foot.wxml"/>
 <view class="art_header">
-  <view class="art_img">
+  <!-- <view class="art_img">
     <navigator url="../mine/mine">
       <image src='{{userLogo}}' mode='aspectFill'></image>
     </navigator>
-  </view>
-  <view class="art_lis">
-    <text 
-      wx:for="{{header}}"
+  </view> -->
+  <view wx:for="{{header}}"
       data-idx="{{index}}" 
       wx:key="index" 
-      class="{{currentTab==index ? 'active' : ''}}" 
-      bindtap="currentBtn">{{item}}</text>
+      class="art_lis {{currentTab==index ? 'active' : ''}}" 
+      bindtap="currentBtn">
+    <text>{{item}}</text>
+    <text class="border"></text>
   </view>
 </view>
 <!-- 搜索框 -->
 <view class="search_top_fixed">
   <view class="index_search_box" bindtap='searchFn'>
     <image src="../../images/icon_search.png"/>
-    <input placeholder='搜索文章标题内容' disabled/>
+    <input placeholder='搜索你想看的' disabled/>
   </view>
 </view>
 
 <!-- tab内容 -->
-  <!-- 文章咨询 -->
+  <!-- 上车热门 -->
 <view class="art_main" wx:if="{{currentTab==0}}">
   <view class="art_main_box">
-    <view class="art_content_box" wx:for="{{list}}" wx:key="index" data-index="{{item.informationId}}" bindtap='navigatorFn1'>
-      <view class="art_content_img">
-        <image mode="widthFix" src="{{item.informationPhoto}}"></image>
-      </view>
-      <view class="art_content_main">
-        <view class="art_content_title">{{item.informationTitle}}</view>
-        <view class="art_bottom_box">
-          <view class="art_number">
-            <view class="number_list look_box">
-              <image mode='aspectFit' src="../../images/icon_eye.png"/>
-              <text>{{item.pageViews}}</text>
-            </view>
-            <view class="number_list ping_box">
-              <image mode='aspectFit' src="../../images/icon_ping1.png"/>
-              <text>{{item.comments}}</text>
-            </view>
-            <view class="number_list zan_box">
-              <image mode='aspectFit' src="{{zanImg}}"/>
-              <text>{{item.likes}}</text>
-            </view>
-          </view>
-          <view class="art_from">{{item.enterpriseName}}</view>
-        </view>
-      </view>
-    </view>
-    <!-- <view class="art_content_box little_content">
-      <view class="art_leftt_img" bindtap='navigatorFn1'><image mode="scaleToFill" src="../../images/lixian.jpg"></image></view>
-      <view class="art_right_img">
-        <view class="art_right_title">布加迪Chiron Sport，2.4秒完成破百的超级跑车完成破百的超级跑车</view>
-        <view class="art_botm_box">
-          <view class="art_bottom_left">上车超跑</view>
-          <view class="art_bottom_right">
-            <view class="art_bottom_zan">
-              <image mode='aspectFit' src="../../images/icon_eye.png"/>
-              <text>9999</text>
-            </view>
-            <view class="art_bottom_zan">
-              <image mode='aspectFit' src="../../images/icon_eye.png"/>
-              <text>9999</text>
-            </view>
-            <view class="art_bottom_zan">
-              <image mode='aspectFit' src="../../images/icon_eye.png"/>
-              <text>9999</text>
-            </view>
-          </view>
-        </view>
-      </view>
-    </view> -->
-  </view>
-</view>
-  <!-- 视频资讯 -->
-<view class="art_main" wx:elif="{{currentTab==1}}">
-  <view class="art_content_box" wx:for="{{list}}" wx:key="index" wx:for-index="idx" data-index="{{item.informationId}}">
-    <view class="art_content_img">
-      <video wx:if='{{idx==playIndex}}' 
+    <view class="bottom_padding" wx:for="{{list}}" wx:key="index" wx:for-index="idx">
+      <!-- 视频 -->
+      <view class="art_content_box little_content" wx:if="{{item.videoAddress!=''}}" data-index="{{item.informationId}}" bindtap='navigatorFn2'>
+        <view class="art_left_img">
+          <video wx:if='{{idx==playIndex}}' 
             id='video{{idx}}' 
-            autoplay='{{true}}' 
+            autoplay='{{true}}'
             show-center-play-btn="{{false}}" 
             controls="true" 
             objectFit="cover"
             auto-pause-if-navigate="{{true}}"
-            src="{{item.videoAddress}}"></video>
-            <image class='video-cover' wx:if='{{idx!=playIndex}}' mode='widthFix' src='{{item.informationPhoto}}'></image>
-            <image class='video-play-btn' wx:if='{{idx!=playIndex}}' mode='widthFix' data-index='{{idx}}' bindtap='videoPlay' src='../../images/icon_play.png'></image>
+            src="{{item.videoAddress}}"
+            bindplay="autoplayFn"></video>
+          <image class='video-cover' wx:if='{{idx!=playIndex}}' mode='aspectFill' src='{{item.informationPhoto}}'></image>
+          <image class='video-play-btn' wx:if='{{idx!=playIndex}}' mode='widthFix' data-index='{{idx}}' bindtap='videoPlay' src='../../images/icon_play.png'></image>
+        </view>
+        <view class="art_right_img">
+          <view class="art_right_title">{{item.informationTitle}}</view>
+          <view class="art_botm_box">
+            <view class="art_bottom_left">{{item.enterpriseName}}</view>
+            <view class="art_bottom_right">
+              <view class="art_bottom_zan vie_box">
+                <image mode='aspectFit' src="../../images/icon_eye.png"/>
+                <text>{{filter.getChang(item.pageViews)}}</text>
+              </view>
+              <!-- <view class="art_bottom_zan vie_box">
+                <image mode='aspectFit' src="../../images/icon_ping1.png"/>
+                <text>{{filter.getChang(item.comments)}}</text>
+              </view> -->
+              <view class="art_bottom_zan vie_box">
+                <image mode='aspectFit' src="../../images/icon_zan1.png"/>
+                <text>{{filter.getChang(item.likes)}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <!-- 文章 -->
+      <view class="art_content_box art_index_box" wx:else data-index="{{item.informationId}}" bindtap='navigatorFn1'>
+        <view class="art_content_img">
+          <image mode="aspectFill" src="{{item.informationPhoto}}"></image>
+        </view>
+        <view class="art_content_main">
+          <view class="art_content_title">{{item.informationTitle}}</view>
+          <view class="art_bottom_box">
+            <view class="art_number">
+              <view class="number_list area_box">
+                <image mode='aspectFit' src="../../images/icon_eye.png"/>
+                <text>{{filter.getChang(item.pageViews)}}</text>
+              </view>
+              <!-- <view class="number_list ping_box">
+                <image mode='aspectFit' src="../../images/icon_ping1.png"/>
+                <text>{{filter.getChang(item.comments)}}</text>
+              </view> -->
+              <view class="number_list area_box">
+                <image mode='aspectFit' src="../../images/icon_zan1.png"/>
+                <text>{{filter.getChang(item.likes)}}</text>
+              </view>
+            </view>
+            <view class="art_from">{{item.enterpriseName}}</view>
+          </view>
+        </view>
+      </view>
     </view>
-    <view class="art_content_main" bindtap='navigatorFn2' data-index="{{item.informationId}}">
+  </view>
+</view>
+  <!-- 视频资讯 -->
+<view class="art_main video_box" wx:elif="{{currentTab==1}}">
+  <view class="art_content_box curr2_video" wx:for="{{list}}" wx:key="index" wx:for-index="idx" data-index="{{item.informationId}}" bindtap='navigatorFn2'>
+    <view class="art_content_img">
+      <video wx:if='{{idx==playIndex}}' 
+          id='video{{idx}}' 
+          autoplay='{{true}}' 
+          show-center-play-btn="{{false}}" 
+          controls="true" 
+          objectFit="cover"
+          auto-pause-if-navigate="{{true}}"
+          src="{{item.videoAddress}}"
+          bindplay="autoplayFn"></video>
+          <image class='video-cover' wx:if='{{idx!=playIndex}}' mode='aspectFill' src='{{item.informationPhoto}}'></image>
+          <image class='video-play-btn' wx:if='{{idx!=playIndex}}' mode='aspectFill' data-index='{{idx}}' bindtap='videoPlay' src='../../images/icon_play.png'></image>
+    </view>
+    <view class="art_content_main" data-index="{{item.informationId}}">
       <view class="art_content_title">{{item.informationTitle}}</view>
       <view class="art_bottom_box">
-        <view class="art_number">
-          <view class="number_list look_box">
-            <image mode='aspectFit' src="../../images/icon_eye.png"/>
-            <text>{{item.pageViews}}</text>
+        <view class="art_number art_number2">
+          <view class="number_list area_box">
+            <image mode='aspectFit' src="../../images/icon_play1.png"/>
+            <text>{{filter.getChang(item.pageViews)}}</text>
           </view>
-          <view class="number_list ping_box">
+          <!-- <view class="number_list ping_box">
             <image mode='aspectFit' src="../../images/icon_ping1.png"/>
-            <text>{{item.comments}}</text>
-          </view>
-          <view class="number_list zan_box">
+            <text>{{filter.getChang(item.comments)}}</text>
+          </view> -->
+          <view class="number_list area_box">
             <image mode='aspectFit' src="../../images/icon_zan1.png"/>
-            <text>{{item.likes}}</text>
+            <text>{{filter.getChang(item.likes)}}</text>
           </view>
         </view>
         <view class="art_from">{{item.enterpriseName}}</view>
@@ -113,4 +132,34 @@
     </view>
   </view>
 </view>
-<navigator url="../openApp/openApp" class="open_app">APP内打开</navigator>
+<!-- 车主访谈 -->
+<view class="art_main1" wx:if="{{currentTab==2}}">
+  <view class="art_main_box">
+    <view class="car_inter_box" wx:for="{{list}}" wx:key="index" wx:for-index="idx" data-index="{{item.informationId}}" bindtap='navigatorFn1'>
+      <view class="car_pic_box">
+        <image src="{{item.photoCover}}"></image>
+      </view>
+      <view class="car_inter_left">
+        <view class="car_msg_box">
+          <view class="car_icon">
+            <image mode='aspectFit' src="../../images/icon_eye.png"/>
+            <text>{{filter.getChang(item.pageViews)}}</text>
+          </view>
+          <!-- <view class="car_icon">
+            <image mode='aspectFit' src="../../images/icon_ping1.png"/>
+            <text> {{filter.getChang(item.comments)}}</text>
+          </view> -->
+          <view class="car_icon">
+            <image mode='aspectFit' src="../../images/icon_zan1.png"/>
+            <text>{{filter.getChang(item.likes)}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+ <!-- wx:if="{{isLoad}}" -->
+<view class="loading_box" wx:if="{{isLoad}}">
+  <image mode='widthFix' src="../../images/loading.gif"></image>
+</view>
+<template is="footer" data="{{isTab}}"/>

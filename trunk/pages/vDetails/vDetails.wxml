@@ -1,12 +1,13 @@
 <!-- 视频 -->
+<wxs module="filter" src="../../utils/date.wxs"></wxs>
 <view class="{{hideLay ? '':'Boxbg'}}">
   <view class="video_msg_box">
-    <video object-fit="cover" autoplay="true" enable-play-gesture="true" src="{{content.videoAddress}}"></video>
+    <video object-fit="fill" autoplay="true" enable-play-gesture="true" src="{{content.videoAddress}}"></video>
   </view>
   <!-- 用户名称 -->
   <view class="header_top_box">
     <view class="head_user_msg">
-      <view class="user_header_pic"><image src="{{content.enterpriseLogo}}"/></view>
+      <view class="user_header_pic" bindtap='jumpFouce' data-enterpriseid="{{content.enterpriseId}}"><image src="{{content.enterpriseLogo}}"/></view>
       <view class="user_name">
         <text>{{content.enterpriseName}}</text>
         <text class="user_sign">{{content.enterpriseSign}}</text>
@@ -18,15 +19,28 @@
   <view class="details_title">{{content.informationTitle}}</view>
   <view class="details_main_box">{{content.informationDesc}}</view>
   <view class="details_date">
-    <view>{{content.informationTime}}</view>
-    <view>播放<text>{{content.pageViews}}</text></view>
+    <view>{{filter.getDateDiff(content.informationTime)}}</view>
+    <view>播放<text> {{content.pageViews}}</text></view>
+    <view>点赞<text> {{likes}}</text></view>
   </view>
   <!-- 相关推荐 -->
   <view class="about_news_box">
     <view class="about_title">相关推荐</view>
     <view class="about_dls_box">
-      <view class="about_dls_main" bindtap='navigatorFn2' wx:for="{{aboutList}}" wx:key="index" data-index="{{item.informationId}}">
-        <video class="about_img" auto-pause-if-open-native="{{true}}" muted="true" controls="{{false}}" object-fit="fill" enable-play-gesture="{{true}}" src="{{item.videoAddress}}"></video>
+      <view class="about_dls_main" bindtap='navigatorFn2' wx:for="{{aboutList}}" wx:key="index" data-index="{{item.informationId}}" wx:for-index="idx">
+        <view class="veido_pic_box">
+          <video class="about_img" 
+            wx:if='{{idx==playIndex}}' 
+            id='video{{idx}}' 
+            autoplay='{{true}}' 
+            show-center-play-btn="{{false}}" 
+            controls="true" 
+            objectFit="cover"
+            auto-pause-if-navigate="{{true}}" 
+            src="{{item.videoAddress}}"></video>
+          <image class='video-cover' wx:if='{{idx!=playIndex}}' src='{{item.informationPhoto}}'></image>
+          <image class='video-play-btn' wx:if='{{idx!=playIndex}}' mode='widthFix' data-index='{{idx}}' bindtap='videoPlay' src='../../images/icon_play.png'></image>
+        </view>
         <view class="about_msg_box">
           <view class="about_msg_title">{{item.informationTitle}}</view>
           <view class="baout_from">{{item.enterpriseName}}</view>
@@ -46,16 +60,16 @@
         <view class="ping_user_name">
           <view class="user_name_msg">
             <text>{{item.nickName}}</text>
-            <text>{{item.commentTime}}</text>
+            <text>{{filter.getDateDiff(item.commentTime)}}</text>
           </view>
-          <view class="first_user_ping">
-            <text data-id="{{item.informationCommentId}}" data-fromuserid="{{item.fromUserId}}" data-name="{{item.nickName}}" bindtap='secondPing'>{{item.commentContent}}</text>
+          <view class="first_user_ping" data-id="{{item.informationCommentId}}" data-fromuserid="{{item.fromUserId}}" data-name="{{item.nickName}}" bindtap='secondPing'>
+            <text>{{item.commentContent}}</text>
           </view>
           <view class="three_ping_msg" bindtap='morePingFn' data-id="{{item.informationCommentId}}" hidden='{{item.secondCommentsList.length==0}}'>
             <view class="three_msg_lun" wx:for="{{item.secondCommentsList}}" wx:for-item="ind" wx:key="ind">
               <text>{{ind.fromUserName}}回复：</text>{{ind.commentContent}}
             </view>
-            <view class="all_ping_msg" bindtap='morePingFn' hidden='{{item.secondCommentsCount<3}}' data-id="{{item.informationCommentId}}">
+            <view class="all_ping_msg" hidden='{{item.secondCommentsCount<3}}' data-id="{{item.informationCommentId}}">
               <text>查看更多评论</text>
               <image src="../../images/icon_jian.png"/>
             </view>
@@ -65,9 +79,9 @@
     </view>
   </view>
   <!-- 点赞+评论+转发 -->
-  <view class="zan_ping_share">
+  <view class="zan_ping_share" hidden='{{layShow}}'>
     <view class="module_box" bindtap='zanBtnFn' data-isLike="{{content.isLike}}" data-id="{{content.informationId}}">
-      <image src='{{islike!= 0 ? "../../images/icon_zan3.png" : "../../images/icon_zan1.png"}}'/>
+      <image src='{{islike!= 0 ? "../../images/icon_zan3.png" : "../../images/icon_zan2.png"}}'/>
       <text class="{{ islike!=0 ? 'yellow' : ''}}">点赞</text>
     </view>
     <view class="module_box" bindtap='pingLayFn'>
@@ -87,8 +101,25 @@
 <view class="ping_layer_box" hidden='{{hideLay}}'>
   <view class="layHide" bindtap='layHideFn'></view>
   <view class="ping_content_layer">
-    <textarea placeholder='{{holder}}' cursor-spacing='30' show-confirm-bar="{{false}}" bindinput='pingVal' bindblur='hideInput' value="{{pingVal}}"  fixed='true' contenteditable="true" auto-height="true" maxlength='1000'/>
+    <textarea placeholder='{{holder}}' 
+              cursor-spacing='30' 
+              show-confirm-bar="{{false}}" 
+              bindinput='pingVal' 
+              bindblur='hideInput' 
+              value="{{pingVal}}" 
+              fixed='true'
+              auto-focus="{{inputShowed}}"
+              focus="{{inputShowed}}"
+              contenteditable="true" 
+              auto-height="true" 
+              maxlength='1000'/>
     <text bindtap='btn_pingFn'>发送</text>
   </view>
 </view>
-<navigator url="../openApp/openApp" class="open_app">APP内打开</navigator>
+<!-- <navigator url="../openApp/openApp" class="open_app">APP内打开</navigator> -->
+
+
+<!-- loading -->
+<view class="loading_box" wx:if="{{isLoad}}">
+  <image mode='widthFix' src="../../images/loading.gif"></image>
+</view>

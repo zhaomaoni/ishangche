@@ -65,7 +65,10 @@ view{
 }
 
 .wxParse-h1, .wxParse-h2, .wxParse-h3, .wxParse-h4, .wxParse-h5, .wxParse-h6, .wxParse-b, .wxParse-strong  { font-weight: bolder }
-
+.wxParse-p{
+  overflow: hidden;
+  text-align: justify
+}
 .wxParse-i,.wxParse-cite,.wxParse-em,.wxParse-var,.wxParse-address{font-style:italic}
 .wxParse-pre,.wxParse-tt,.wxParse-code,.wxParse-kbd,.wxParse-samp{font-family:monospace}
 .wxParse-pre{white-space:pre}
@@ -93,8 +96,9 @@ view{
 }
 
 .wxParse-img{
+  width: 100% !important;
     /*background-color: #efefef;*/
-    overflow: hidden;
+  overflow: hidden;
 }
 
 .wxParse-blockquote {

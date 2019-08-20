@@ -16,8 +16,11 @@ Page({
     commentList:[],
     islike:0,
     follow:0,
+    isLoad:false,
+    likes:"",
+    inter:0,//车主访谈按钮是否现实  为2时现实
     hideLay:true,   //是否现实评论框
-    inputShowed:true,//是否自动获取光标
+    inputShowed:false,//是否自动获取光标
     pingVal:"", //评论框的内容
     holder:"发表你的精彩评论吧", //评论框placeholder
     touchStartTime: 0,// 触摸开始时间
@@ -29,6 +32,12 @@ Page({
   onLoad: function (opt) {
     var _this = this;
     var index = opt.index;
+    var current = opt.currentTab;
+    if (current==2){
+      this.setData({
+        inter: current
+      })
+    }
     this.setData({
       informationId:index
     })
@@ -53,6 +62,9 @@ Page({
   //获取详情内容
   loadContent:function(index){
     var _this = this;
+    this.setData({
+      isLoad:true
+    })
     allapi.postFormRequestAll(conf.allUrl.iBody, {
       channel: "02",
       sessionId: "",
@@ -66,8 +78,12 @@ Page({
         content: res.data,
         islike: res.data.isLike,
         follow: res.data.follow,
+        likes: res.data.likes,
         informationCommentId: res.data.informationId,
         nodes: res.data.informationContent
+      })
+      _this.setData({
+        isLoad: false
       })
       userUtil.setIsLike(res.data.isLike)
       WxParse.wxParse('article', 'html', _this.data.nodes, _this, 5);
@@ -86,7 +102,8 @@ Page({
     this.loadContent(this.data.informationId)
     this.setData({
       loadMoreIs: true,
-      currentPage:1
+      currentPage:1,
+      commentList:[]
     })
     this.morePingLoad(this.data.informationId)
   },
@@ -97,6 +114,11 @@ Page({
   /*** 用户点击右上角分享 */
   onShareAppMessage: function () {
     var _this = this;
+    return {
+      title: _this.data.content.informationTitle,
+      imageUrl: _this.data.content.informationPhoto,
+      path: '/pages/aDetails/aDetails?index=' + _this.data.informationId + "&currentTab=" + _this.data.inter
+    }
     wx.showShareMenu({
       withShareTicket: true
     })
@@ -119,16 +141,18 @@ Page({
     var islike = e.currentTarget.dataset.islike;
     var id = e.currentTarget.dataset.id;
     if (userUtil.getScIdNum()!=""){
-      if (userUtil.getIsLike() == "1") {
+      if (userUtil.getIsLike() == "1") {   //点过赞
         userUtil.setIsLike("0")
         this.setData({
-          islike: userUtil.getIsLike()
+          islike: userUtil.getIsLike(),
+          likes: parseInt(_this.data.likes) - 1
         })
         this.zanLoadFn(id, "1")
-      } else {
+      } else {  //未点过赞
         userUtil.setIsLike("1")
         this.setData({
-          islike: userUtil.getIsLike()
+          islike: userUtil.getIsLike(),
+          likes: parseInt(_this.data.likes) + 1
         })
         this.zanLoadFn(id, "0")
       }
@@ -151,6 +175,10 @@ Page({
   },
   //点赞接口
   zanLoadFn:function(id,islike){
+    var _this = this;
+    this.setData({
+      isLoad: true
+    })
     allapi.postFormRequestAll(conf.allUrl.like, {
       channel: "02",
       sessionId: "",
@@ -163,6 +191,9 @@ Page({
         userId: userUtil.getUserId()
       }
     }, function (res) {
+      _this.setData({
+        isLoad: false
+      })
       // console.log(res)
     })
   },
@@ -170,9 +201,25 @@ Page({
   morePingFn:function(e){
     var index = e.currentTarget.dataset.id;
     var _this = this
-    wx.navigateTo({
-      url: '../moreDetails/moreDetails?index=' + index + "&informationId=" + _this.data.informationId,
-    })
+    if (userUtil.getScIdNum() != "") {
+      wx.navigateTo({
+        url: '../moreDetails/moreDetails?index=' + index + "&informationId=" + _this.data.informationId,
+      })
+    } else {
+      wx.showModal({
+        title: '提示',
+        content: '您未绑定上车号，请绑定再查看',
+        success: function (msg) {
+          if (msg.cancel) {
+            //点击取消,默认隐藏弹框
+          } else {
+            wx.navigateTo({
+              url: '../mine/mine',
+            })
+          }
+        }
+      })
+    }
   },
   //获取一级评论数据
   morePingLoad:function(index){
@@ -181,6 +228,9 @@ Page({
       wx.hideLoading()
       return;
     }
+    this.setData({
+      isLoad: true
+    })
     allapi.postFormRequestAll(conf.allUrl.firstInformationComments, {
       channel: "02",
       sessionId: "",
@@ -200,10 +250,12 @@ Page({
       var listNum = listArr;
       if (_this.data.loadMoreIs == false) {
         _this.setData({
-          commentList: listNum
+          commentList: listNum,
+          isLoad:false
         })
       } else {
         _this.setData({
+          isLoad:false,
           commentList: _this.data.commentList.concat(listNum)
         })
       }
@@ -218,10 +270,6 @@ Page({
           loadMoreIs: res.data.commentsList.length == 10
         })
       }
-      
-      wx.hideLoading()
-      // 隐藏导航栏加载框
-      wx.hideNavigationBarLoading();
       // 停止下拉动作
       wx.stopPullDownRefresh();
     })
@@ -291,7 +339,8 @@ Page({
   pingLayFn:function(){
     if (userUtil.getScIdNum() != "") {
       this.setData({
-        hideLay:false
+        hideLay:false,
+        inputShowed:true
       })
     }else{
       wx.showModal({
@@ -346,6 +395,9 @@ Page({
   //评论接口
   loadPingFn: function (id, content, replyUserId, type){
     var _this = this;
+    this.setData({
+      isLoad: true
+    })
     allapi.postFormRequestAll(conf.allUrl.comment , {
       channel: "02",
       sessionId: "",
@@ -364,10 +416,12 @@ Page({
         hideLay: true,
         currentPage:1,
         fromuserid: "",
+        isLoad:false,
+        commentList:[],
         informationCommentId: _this.data.informationId,
         holder:"发表你的精彩评论吧"
       })
-
+      // _this.morePingLoad(_this.data.informationId)
       allapi.postFormRequestAll(conf.allUrl.firstInformationComments, {
         channel: "02",
         sessionId: "",
@@ -379,28 +433,21 @@ Page({
           currentPage: _this.data.currentPage++
         }
       }, function (res) {
-        var listArr = res.data.commentsList;
-        var listNum = listArr;
+        var commentList = res.data.commentsList;
         if (_this.data.loadMoreIs == false) {
           _this.setData({
-            commentList: listNum
-          })
-        } else {
-          _this.setData({
-            commentList: _this.data.commentList.concat(listNum)
-          })
-        }
-        if (res.data.commentsList.length < 10) {
-          _this.setData({
             currentPage: _this.data.currentPage++,
-            loadMoreIs: res.data.commentsList.length == 10
+            commentList: commentList,
           })
         } else {
           _this.setData({
             currentPage: _this.data.currentPage++,
-            loadMoreIs: res.data.commentsList.length == 10
+            commentList: _this.data.commentList.concat(commentList)
           })
         }
+        _this.setData({
+          loadMoreIs: res.data.commentsList.length == 10
+        })
         wx.hideLoading()
         // 隐藏导航栏加载框
         wx.hideNavigationBarLoading();
@@ -414,12 +461,28 @@ Page({
     var fromuserid = e.currentTarget.dataset.fromuserid;
     var name = e.currentTarget.dataset.name;
     var ids = e.currentTarget.dataset.id;
-    this.setData({
-      hideLay:false,
-      fromuserid: fromuserid,
-      informationCommentId:ids,
-      holder: "回复：" + name
-    })
+    if (userUtil.getScIdNum() != "") {
+      this.setData({
+        hideLay: false,
+        fromuserid: fromuserid,
+        informationCommentId: ids,
+        holder: "回复：" + name
+      })
+    } else {
+      wx.showModal({
+        title: '提示',
+        content: '您未绑定上车号，请绑定后再评论',
+        success: function (msg) {
+          if (msg.cancel) {
+            //点击取消,默认隐藏弹框
+          } else {
+            wx.navigateTo({
+              url: '../mine/mine',
+            })
+          }
+        }
+      })
+    }
   },
   // 长按删除评论
   longTap: function (e) {
@@ -444,6 +507,9 @@ Page({
   //删除评论接口
   delCommit:function(ids){
     var _this = this;
+    this.setData({
+      isLoad: true
+    })
     allapi.postFormRequestAll(conf.allUrl.delComment, {
       channel: "02",
       sessionId: "",
@@ -455,7 +521,9 @@ Page({
       }
     }, function (res) {
       _this.setData({
-        currentPage: 1
+        currentPage: 1,
+        // commentList: [],
+        isLoad:false
       })
       allapi.postFormRequestAll(conf.allUrl.firstInformationComments, {
         channel: "02",
@@ -468,28 +536,21 @@ Page({
           currentPage: _this.data.currentPage++
         }
       }, function (res) {
-        var listArr = res.data.commentsList;
-        var listNum = listArr;
+        var commentList = res.data.commentsList;
         if (_this.data.loadMoreIs == false) {
           _this.setData({
-            commentList: listNum
-          })
-        } else {
-          _this.setData({
-            commentList: _this.data.commentList.concat(listNum)
-          })
-        }
-        if (res.data.commentsList.length < 10) {
-          _this.setData({
             currentPage: _this.data.currentPage++,
-            loadMoreIs: res.data.commentsList.length == 10
+            commentList: commentList,
           })
         } else {
           _this.setData({
             currentPage: _this.data.currentPage++,
-            loadMoreIs: res.data.commentsList.length == 10
+            commentList: _this.data.commentList.concat(commentList)
           })
         }
+        _this.setData({
+          loadMoreIs: res.data.commentsList.length == 10
+        })
         wx.hideLoading()
         // 隐藏导航栏加载框
         wx.hideNavigationBarLoading();
@@ -514,4 +575,10 @@ Page({
   touchEnd: function (e) {
     this.touchEndTime = e.timeStamp
   },
+  /// 点击 申请访谈 按钮跳转至申请访谈页
+  appleBtn:function(){
+    wx.navigateTo({
+      url: '../apply/apply',
+    })
+  }
 })

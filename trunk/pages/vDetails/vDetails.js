@@ -6,9 +6,11 @@ var WxParse = require('../../wxParse/wxParse.js');
 Page({
   /*** 页面的初始数据 */
   data: {
+    playIndex: null,//用于记录当前播放的视频的索引值
     isShow: false,
     content: [],
     nodes: [],
+    isLoad:false,
     informationId: "", //
     pageSize: "10",
     currentPage: 1,
@@ -16,8 +18,10 @@ Page({
     commentList: [],
     islike: 0,
     follow: 0,
+    likes:"",
+    layShow:false,
     hideLay: true,   //是否现实评论框
-    inputShowed: true,//是否自动获取光标
+    inputShowed: false,//是否自动获取光标
     pingVal: "", //评论框的内容
     holder: "发表你的精彩评论吧", //评论框placeholder
     touchStartTime: 0,// 触摸开始时间
@@ -43,6 +47,9 @@ Page({
   //获取详情内容
   loadList: function (index){
     var _this = this;
+    this.setData({
+      isLoad:true
+    })
     allapi.postFormRequestAll(conf.allUrl.iBody, {
       channel: "02",
       sessionId: "",
@@ -55,6 +62,8 @@ Page({
       _this.setData({
         content: res.data,
         islike: res.data.isLike,
+        isLoad:false,
+        likes: res.data.likes,
         follow: res.data.follow,
         informationCommentId: res.data.informationId,
         nodes: res.data.informationContent
@@ -101,12 +110,24 @@ Page({
   /*** 生命周期函数--监听页面卸载 */
   onUnload: function () {},
   /*** 页面相关事件处理函数--监听用户下拉动作 */
-  onPullDownRefresh: function () {},
+  onPullDownRefresh: function () {
+    this.setData({
+      loadMoreIs: true,
+      currentPage: 1,
+      commentList: []
+    })
+    this.morePingLoad(this.data.informationId)
+  },
   /*** 页面上拉触底事件的处理函数 */
   onReachBottom: function () {},
   /*** 用户点击右上角分享 */
   onShareAppMessage: function () {
     var _this = this;
+    return {
+      title: _this.data.content.informationTitle,
+      imageUrl: _this.data.content.informationPhoto,
+      path: '/pages/vDetails/vDetails?index='+_this.data.informationId
+    }
     wx.showShareMenu({
       withShareTicket: true
     })
@@ -136,16 +157,18 @@ Page({
     var islike = e.currentTarget.dataset.islike;
     var id = e.currentTarget.dataset.id;
     if (userUtil.getScIdNum() != "") {
-      if (userUtil.getIsLike() == "1") {
+      if (userUtil.getIsLike() == "1") {   //点过赞
         userUtil.setIsLike("0")
         this.setData({
-          islike: userUtil.getIsLike()
+          islike: userUtil.getIsLike(),
+          likes: parseInt(_this.data.likes) - 1
         })
         this.zanLoadFn(id, "1")
-      } else {
+      } else {  //未点过赞
         userUtil.setIsLike("1")
         this.setData({
-          islike: userUtil.getIsLike()
+          islike: userUtil.getIsLike(),
+          likes: parseInt(_this.data.likes) + 1
         })
         this.zanLoadFn(id, "0")
       }
@@ -167,6 +190,10 @@ Page({
   },
   //点赞接口
   zanLoadFn: function (id, islike) {
+    var _this = this;
+    this.setData({
+      isLoad: true
+    })
     allapi.postFormRequestAll(conf.allUrl.like, {
       channel: "02",
       sessionId: "",
@@ -179,6 +206,9 @@ Page({
         userId: userUtil.getUserId()
       }
     }, function (res) {
+      _this.setData({
+        isLoad: false
+      })
       // console.log(res)
     })
   },
@@ -186,13 +216,32 @@ Page({
   morePingFn: function (e) {
     var _this = this
     var index = e.currentTarget.dataset.id;
-    wx.navigateTo({
-      url: '../moreDetails/moreDetails?index=' + index + "&informationId=" + _this.data.informationId,
-    })
+    if (userUtil.getScIdNum() != "") {
+      wx.navigateTo({
+        url: '../moreDetails/moreDetails?index=' + index + "&informationId=" + _this.data.informationId,
+      })
+    } else {
+      wx.showModal({
+        title: '提示',
+        content: '您未绑定上车号，请绑定再查看',
+        success: function (msg) {
+          if (msg.cancel) {
+            //点击取消,默认隐藏弹框
+          } else {
+            wx.navigateTo({
+              url: '../mine/mine',
+            })
+          }
+        }
+      })
+    }
   },
   //获取一级评论数据
   morePingLoad: function (index) {
     var _this = this;
+    this.setData({
+      isLoad: true
+    })
     allapi.postFormRequestAll(conf.allUrl.firstInformationComments, {
       channel: "02",
       sessionId: "",
@@ -213,10 +262,12 @@ Page({
       if (_this.data.loadMoreIs == false) {
         _this.setData({
           commentList: listNum,
+          isLoad:false,
           currentPage: _this.data.currentPage++
         })
       } else {
         _this.setData({
+          isLoad:false,
           currentPage: _this.data.currentPage++,
           commentList: _this.data.commentList.concat(listNum)
         })
@@ -296,7 +347,9 @@ Page({
   pingLayFn: function () {
     if (userUtil.getScIdNum() != "") {
       this.setData({
-        hideLay: false
+        hideLay: false,
+        layShow:true,
+        inputShowed:true
       })
     } else {
       wx.showModal({
@@ -317,13 +370,15 @@ Page({
   //点击空白地方关闭评论框
   layHideFn:function(){
     this.setData({
-      hideLay: true
+      hideLay: true,
+      layShow:false
     })
   },
   //评论框失去焦点后隐藏
   hideInput: function () {
     this.setData({
-      hideLay: true
+      hideLay: true,
+      layShow:false
     })
   },
   //获取评论内容
@@ -352,6 +407,9 @@ Page({
   //评论接口
   loadPingFn: function (id, content, replyUserId, type) {
     var _this = this;
+    this.setData({
+      isLoad: true
+    })
     allapi.postFormRequestAll(conf.allUrl.comment, {
       channel: "02",
       sessionId: "",
@@ -369,7 +427,9 @@ Page({
         pingVal: "",
         hideLay: true,
         currentPage: 1,
+        isLoad:false,
         fromuserid: "",
+        commentList:[],
         informationCommentId: _this.data.informationId,
         holder: "发表你的精彩评论吧"
       })
@@ -384,28 +444,21 @@ Page({
           currentPage: _this.data.currentPage++
         }
       }, function (res) {
-        var listArr = res.data.commentsList;
-        var listNum = listArr;
+        var commentList = res.data.commentsList;
         if (_this.data.loadMoreIs == false) {
           _this.setData({
-            commentList: listNum
-          })
-        } else {
-          _this.setData({
-            commentList: _this.data.commentList.concat(listNum)
-          })
-        }
-        if (res.data.commentsList.length < 10) {
-          _this.setData({
             currentPage: _this.data.currentPage++,
-            loadMoreIs: res.data.commentsList.length == 10
+            commentList: commentList,
           })
         } else {
           _this.setData({
             currentPage: _this.data.currentPage++,
-            loadMoreIs: res.data.commentsList.length == 10
+            commentList: _this.data.commentList.concat(commentList)
           })
         }
+        _this.setData({
+          loadMoreIs: res.data.commentsList.length == 10
+        })
         wx.hideLoading()
         // 隐藏导航栏加载框
         wx.hideNavigationBarLoading();
@@ -419,12 +472,28 @@ Page({
     var fromuserid = e.currentTarget.dataset.fromuserid;
     var name = e.currentTarget.dataset.name;
     var ids = e.currentTarget.dataset.id;
-    this.setData({
-      hideLay: false,
-      fromuserid: fromuserid,
-      informationCommentId: ids,
-      holder: "回复：" + name
-    })
+    if (userUtil.getScIdNum() != "") {
+      this.setData({
+        hideLay: false,
+        fromuserid: fromuserid,
+        informationCommentId: ids,
+        holder: "回复：" + name
+      })
+    } else {
+      wx.showModal({
+        title: '提示',
+        content: '您未绑定上车号，请绑定后在评论',
+        success: function (msg) {
+          if (msg.cancel) {
+            //点击取消,默认隐藏弹框
+          } else {
+            wx.navigateTo({
+              url: '../mine/mine',
+            })
+          }
+        }
+      })
+    }
   },
   // 长按删除评论
   longTap: function (e) {
@@ -449,6 +518,9 @@ Page({
   //删除评论接口
   delCommit: function (ids) {
     var _this = this;
+    this.setData({
+      isLoad: true
+    })
     allapi.postFormRequestAll(conf.allUrl.delComment, {
       channel: "02",
       sessionId: "",
@@ -460,7 +532,9 @@ Page({
       }
     }, function (res) {
       _this.setData({
-        currentPage: 1
+        currentPage: 1,
+        isLoad:false,
+        // commentList:[]
       })
       allapi.postFormRequestAll(conf.allUrl.firstInformationComments, {
         channel: "02",
@@ -473,28 +547,21 @@ Page({
           currentPage: _this.data.currentPage++
         }
       }, function (res) {
-        var listArr = res.data.commentsList;
-        var listNum = listArr;
+        var commentList = res.data.commentsList;
         if (_this.data.loadMoreIs == false) {
           _this.setData({
-            commentList: listNum
-          })
-        } else {
-          _this.setData({
-            commentList: _this.data.commentList.concat(listNum)
-          })
-        }
-        if (res.data.commentsList.length < 10) {
-          _this.setData({
             currentPage: _this.data.currentPage++,
-            loadMoreIs: res.data.commentsList.length == 10
+            commentList: commentList,
           })
         } else {
           _this.setData({
             currentPage: _this.data.currentPage++,
-            loadMoreIs: res.data.commentsList.length == 10
+            commentList: _this.data.commentList.concat(commentList)
           })
         }
+        _this.setData({
+          loadMoreIs: res.data.commentsList.length == 10
+        })
         wx.hideLoading()
         // 隐藏导航栏加载框
         wx.hideNavigationBarLoading();
@@ -503,6 +570,28 @@ Page({
       })
     })
   },
+  //点击播放
+  videoPlay: function (e) {
+    var curIdx = e.currentTarget.dataset.index;
+    // 没有播放时播放视频
+    // if (!this.data.playIndex) {
+    //   this.setData({
+    //     playIndex: curIdx
+    //   })
+    //   var videoContext = wx.createVideoContext('video' + curIdx) //这里对应的视频id
+    //   videoContext.play()
+    // } else { // 有播放时先将prev暂停，再播放当前点击的current
+    //   var videoContextPrev = wx.createVideoContext('video' + this.data.playIndex)
+    //   if (this.data.playIndex != curIdx) {
+    //     videoContextPrev.pause()
+    //   }
+    //   this.setData({
+    //     playIndex: curIdx
+    //   })
+    //   var videoContextCurrent = wx.createVideoContext('video' + curIdx)
+    //   videoContextCurrent.play()
+    // }
+  },
   /// 按钮触摸开始触发的事件
   touchStart: function (e) {
     this.touchStartTime = e.timeStamp
@@ -510,5 +599,13 @@ Page({
   /// 按钮触摸结束触发的事件
   touchEnd: function (e) {
     this.touchEndTime = e.timeStamp
+  },
+  //点击公众号头像跳转至公众号主页
+  jumpFouce: function (e) {
+    console.log(e.currentTarget.dataset.enterpriseid)
+    var enterpriseid = e.currentTarget.dataset.enterpriseid;
+    wx.navigateTo({
+      url: '../focus/focus?enterpriseid=' + enterpriseid,
+    })
   },
 })

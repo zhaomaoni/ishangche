@@ -1,0 +1,12 @@
+<template name="footer">
+  <view class="footer_tab_box">
+    <view open-type='reLaunch' data-url="../index/index" bindtap="footFn" class="footer_img_box" data-index="0">
+      <image mode="aspectFit" src="{{isTab!=0 ? '../../images/bot_ind1.png' : '../../images/bot_ind2.png'}}"/>
+      <text class="{{isTab==0 ? 'bgTxt':''}}">首页</text>
+    </view>
+    <view open-type='reLaunch' data-url="../mine/mine" bindtap="footFn" class="footer_img_box" data-index="1">
+      <image mode="aspectFit" src="{{isTab!=1 ? '../../images/bot_mine1.png' : '../../images/bot_mine2.png'}}"/>
+      <text class="{{isTab==1 ? 'bgTxt':''}}">我的</text>
+    </view>
+  </view>
+</template>

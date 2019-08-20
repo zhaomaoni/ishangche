@@ -14,3 +14,16 @@
   border-top-left-radius: 100px;
   border-bottom-left-radius: 100px;
 }
+
+
+/* loading */
+.loading_box{
+  width: 20vw;
+  height: 13vw;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.loading_box image{
+  width: 100%;
+  height: 100%;
+}

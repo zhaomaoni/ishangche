@@ -1,5 +1,6 @@
 <!-- 用户名称 -->
 <import src="../../wxParse/wxParse.wxml" />
+<wxs module="filter" src="../../utils/date.wxs"></wxs>
 <view class="{{hideLay ? '':'Boxbg'}}">
   <view class="header_top_box">
     <view class="head_user_msg">
@@ -17,7 +18,12 @@
   <view class="details_main">
     <template is="wxParse" data="{{wxParseData:article.nodes}}" />
   </view>
-  <view class="yue_du">阅读 <text>{{content.pageViews}}</text></view>
+  <view class="yue_du">
+    <text>阅读 {{content.pageViews}}</text>
+    <text>点赞 {{likes}}</text>
+  </view>
+  <!-- 车主访谈按钮 -->
+  <view class="apple_btn" hidden='{{inter!=2}}' bindtap='appleBtn'>申请访谈</view>
   <!-- 评论 -->
   <view class="ping_lun_box">
     <view class="ping_lun_title">评论详情</view>
@@ -30,16 +36,16 @@
         <view class="ping_user_name">
           <view class="user_name_msg">
             <text>{{item.nickName}}</text>
-            <text>{{item.commentTime}}</text>
+            <text>{{filter.getDateDiff(item.commentTime)}}</text>
           </view>
-          <view class="first_user_ping">
-            <text data-id="{{item.informationCommentId}}" data-fromuserid="{{item.fromUserId}}" data-name="{{item.nickName}}" bindtap='secondPing'>{{item.commentContent}}</text>
+          <view class="first_user_ping" data-id="{{item.informationCommentId}}" data-fromuserid="{{item.fromUserId}}" data-name="{{item.nickName}}" bindtap='secondPing'>
+            <text>{{item.commentContent}}</text>
           </view>
           <view class="three_ping_msg" bindtap='morePingFn' data-id="{{item.informationCommentId}}" hidden='{{item.secondCommentsList.length==0}}'>
             <view class="three_msg_lun" wx:for="{{item.secondCommentsList}}" wx:for-item="ind" wx:key="ind">
               <text>{{ind.fromUserName}}回复：</text>{{ind.commentContent}}
             </view>
-            <view class="all_ping_msg" bindtap='morePingFn' hidden='{{item.secondCommentsCount<3}}' data-id="{{item.informationCommentId}}">
+            <view class="all_ping_msg" hidden='{{item.secondCommentsCount<3}}' data-id="{{item.informationCommentId}}">
               <text>查看更多评论</text>
               <image src="../../images/icon_jian.png"/>
             </view>
@@ -51,7 +57,7 @@
   <!-- 点赞+评论+转发 -->
   <view class="zan_ping_share">
     <view class="module_box" bindtap='zanBtnFn' data-isLike="{{content.isLike}}" data-id="{{content.informationId}}">
-      <image src='{{islike!= 0 ? "../../images/icon_zan3.png" : "../../images/icon_zan1.png"}}'/>
+      <image src='{{islike!= 0 ? "../../images/icon_zan3.png" : "../../images/icon_zan2.png"}}'/>
       <text class="{{ islike!=0 ? 'yellow' : ''}}">点赞</text>
     </view>
     <view class="module_box" bindtap='pingLayFn'>
@@ -71,17 +77,23 @@
   <view class="layHide" bindtap='layHideFn'></view>
   <view class="ping_content_layer">
     <textarea placeholder='{{holder}}'
-              placeholder-style="line-height:10.7vw"
               cursor-spacing='30' 
               show-confirm-bar="{{false}}" 
               bindinput='pingVal' 
               bindblur='hideInput' 
               value="{{pingVal}}"  
-              fixed='true' 
+              fixed='true'
+              auto-focus="{{inputShowed}}"
+              focus="{{inputShowed}}"
               contenteditable="true" 
               auto-height="true" 
               maxlength='1000'/>
     <text bindtap='btn_pingFn'>发送</text>
   </view>
 </view>
-<navigator url="../openApp/openApp" class="open_app">APP内打开</navigator>
+<!-- <navigator url="../openApp/openApp" class="open_app">APP内打开</navigator> -->
+
+<!-- loading -->
+<view class="loading_box" wx:if="{{isLoad}}">
+  <image mode='widthFix' src="../../images/loading.gif"></image>
+</view>
