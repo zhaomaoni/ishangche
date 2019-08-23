@@ -94,40 +94,67 @@
     </view>
   </view>
 </view>
-  <!-- 视频资讯 -->
+  <!-- 超跑锦集 -->
 <view class="art_main video_box" wx:elif="{{currentTab==1}}">
-  <view class="art_content_box curr2_video" wx:for="{{list}}" wx:key="index" wx:for-index="idx" data-index="{{item.informationId}}" bindtap='navigatorFn2'>
-    <view class="art_content_img">
-      <video wx:if='{{idx==playIndex}}' 
-          id='video{{idx}}' 
-          autoplay='{{true}}' 
-          show-center-play-btn="{{false}}" 
-          controls="true" 
-          objectFit="cover"
-          auto-pause-if-navigate="{{true}}"
-          src="{{item.videoAddress}}"
-          bindplay="autoplayFn"></video>
-          <image class='video-cover' wx:if='{{idx!=playIndex}}' mode='aspectFill' src='{{item.informationPhoto}}'></image>
-          <image class='video-play-btn' wx:if='{{idx!=playIndex}}' mode='aspectFill' data-index='{{idx}}' bindtap='videoPlay' src='../../images/icon_play.png'></image>
-    </view>
-    <view class="art_content_main" data-index="{{item.informationId}}">
-      <view class="art_content_title">{{item.informationTitle}}</view>
-      <view class="art_bottom_box">
-        <view class="art_number art_number2">
-          <view class="number_list area_box">
-            <image mode='aspectFit' src="../../images/icon_play1.png"/>
-            <text>{{filter.getChang(item.pageViews)}}</text>
+  <view class="art_content_box curr2_video" wx:for="{{list}}" wx:key="index" wx:for-index="idx">
+    <view wx:if="{{item.videoAddress!=''}}" data-index="{{item.informationId}}" bindtap='navigatorFn2'>
+      <view class="art_content_img">
+        <video wx:if='{{idx==playIndex}}' 
+            id='video{{idx}}' 
+            autoplay='{{true}}' 
+            show-center-play-btn="{{false}}" 
+            controls="true" 
+            objectFit="cover"
+            auto-pause-if-navigate="{{true}}"
+            src="{{item.videoAddress}}"
+            bindplay="autoplayFn"></video>
+            <image class='video-cover' wx:if='{{idx!=playIndex}}' mode='aspectFill' src='{{item.informationPhoto}}'></image>
+            <image class='video-play-btn' wx:if='{{idx!=playIndex}}' mode='aspectFill' data-index='{{idx}}' bindtap='videoPlay' src='../../images/icon_play.png'></image>
+      </view>
+      <view class="art_content_main" data-index="{{item.informationId}}">
+        <view class="art_content_title">{{item.informationTitle}}</view>
+        <view class="art_bottom_box">
+          <view class="art_number art_number2">
+            <view class="number_list area_box">
+              <image mode='aspectFit' src="../../images/icon_play1.png"/>
+              <text>{{filter.getChang(item.pageViews)}}</text>
+            </view>
+            <!-- <view class="number_list ping_box">
+              <image mode='aspectFit' src="../../images/icon_ping1.png"/>
+              <text>{{filter.getChang(item.comments)}}</text>
+            </view> -->
+            <view class="number_list area_box">
+              <image mode='aspectFit' src="../../images/icon_zan1.png"/>
+              <text>{{filter.getChang(item.likes)}}</text>
+            </view>
           </view>
-          <!-- <view class="number_list ping_box">
-            <image mode='aspectFit' src="../../images/icon_ping1.png"/>
-            <text>{{filter.getChang(item.comments)}}</text>
-          </view> -->
-          <view class="number_list area_box">
-            <image mode='aspectFit' src="../../images/icon_zan1.png"/>
-            <text>{{filter.getChang(item.likes)}}</text>
-          </view>
+          <view class="art_from">{{item.enterpriseName}}</view>
         </view>
-        <view class="art_from">{{item.enterpriseName}}</view>
+      </view>
+    </view>
+    <view wx:else data-index="{{item.informationId}}" bindtap='navigatorFn1'>
+      <view class="art_content_img">
+        <image class='video-cover' mode='aspectFill' src='{{item.informationPhoto}}'></image>
+      </view>
+      <view class="art_content_main" data-index="{{item.informationId}}">
+        <view class="art_content_title">{{item.informationTitle}}</view>
+        <view class="art_bottom_box">
+          <view class="art_number art_number2">
+            <view class="number_list area_box">
+              <image mode='aspectFit' src="../../images/icon_play1.png"/>
+              <text>{{filter.getChang(item.pageViews)}}</text>
+            </view>
+            <!-- <view class="number_list ping_box">
+              <image mode='aspectFit' src="../../images/icon_ping1.png"/>
+              <text>{{filter.getChang(item.comments)}}</text>
+            </view> -->
+            <view class="number_list area_box">
+              <image mode='aspectFit' src="../../images/icon_zan1.png"/>
+              <text>{{filter.getChang(item.likes)}}</text>
+            </view>
+          </view>
+          <view class="art_from">{{item.enterpriseName}}</view>
+        </view>
       </view>
     </view>
   </view>

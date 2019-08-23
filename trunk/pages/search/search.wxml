@@ -14,7 +14,14 @@
     <view class="main_pic_box">
       <image mode="aspectFill" src="{{item.informationPhoto}}"/>
     </view>
-    <view class="main_title_box">{{item.informationTitle}}</view>
+    <view class="main_title_box">
+      <!-- {{item.informationTitle}} -->
+      <block wx:for="{{item.informationTitle}}" wx:key="*this"  wx:for-item="items">
+        <text wx:if="{{items.key == true}}" class="yellow">{{items.word}}</text>               
+        <text wx:else>{{items.word}}</text>
+      </block> 
+      
+    </view>
     <view class="main_number_box">
       <view class="number_type">
         <view class="number_msg">
@@ -48,7 +55,12 @@
           <image class='video-cover' wx:if='{{idx!=playIndex}}' mode='aspectFill' src='{{item.informationPhoto}}'></image>
           <image class='video-play-btn' wx:if='{{idx!=playIndex}}' mode='widthFix' data-index='{{idx}}' bindtap='videoPlay' src='../../images/icon_play.png'></image>
     </view>
-    <view class="main_title_box">{{item.informationTitle}}</view>
+    <view class="main_title_box">
+      <block wx:for="{{item.informationTitle}}" wx:key="*this"  wx:for-item="items">
+        <text wx:if="{{items.key == true}}" class="yellow">{{items.word}}</text>               
+        <text wx:else>{{items.word}}</text>
+      </block> 
+    </view>
     <view class="main_number_box">
       <view class="number_type">
         <view class="number_msg">
@@ -67,4 +79,8 @@
       <text class="main_from">{{item.enterpriseName}}</text>
     </view>
   </view>
+</view>
+ <!-- wx:if="{{isLoad}}" -->
+<view class="loading_box" wx:if="{{isLoad}}">
+  <image mode='widthFix' src="../../images/loading.gif"></image>
 </view>

@@ -6,7 +6,7 @@ Page({
   /*** 页面的初始数据 */
   data: {
     playIndex: null,//用于记录当前播放的视频的索引值
-    header: ["上车热门", "超跑视频", "车主访谈"],
+    header: ["上车热门", "超跑锦集", "车主访谈"],
     currentTab: 0,
     currentPage:1,
     loadMoreIs: true, //是否下拉

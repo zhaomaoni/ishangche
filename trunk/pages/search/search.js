@@ -11,6 +11,7 @@ Page({
     loadMoreIs: true,
     list: [],
     isHide: true,
+    isLoad:false,
     playIndex: null,//用于记录当前播放的视频的索引值
   },
   /*** 生命周期函数--监听页面加载 */
@@ -25,14 +26,23 @@ Page({
   onUnload: function () { },
   /*** 页面相关事件处理函数--监听用户下拉动作 */
   onPullDownRefresh: function () {
-    wx.showLoading({
-      title: '加载中',
-    })
+    var _this = this;
     this.setData({
-      currentPage:1
+      currentPage:1,
+      list:[],
+      loadMoreIs:true,
+      isLoad: true
     })
-    this.buildHistory(this.data.valTxt)
-    wx.hideLoading()
+    wx.stopPullDownRefresh();
+    setTimeout(function () {
+      _this.buildHistory(_this.data.valTxt)
+      _this.setData({
+        isLoad: false
+      })
+    }, 500);
+
+
+
   },
   /*** 页面上拉触底事件的处理函数 */
   onReachBottom: function () {
@@ -76,6 +86,9 @@ Page({
       wx.hideLoading()
       return;
     }
+    this.setData({
+      isLoad:true
+    })
     allapi.postFormRequestAll(conf.allUrl.informationFuzzyQuery, {
       channel: "02",
       sessionId: "",
@@ -86,38 +99,80 @@ Page({
         title: valTxt
       }
     }, function (res) {
-      // console.log(res.data)
-      var listArr = res.data.informationList;
-      if (_this.data.loadMoreIs == false) {
-        _this.setData({
-          currentPage: _this.data.currentPage++,
-          list: listArr,
-        })
-      } else {
-        _this.setData({
-          currentPage: _this.data.currentPage++,
-          list: _this.data.list.concat(listArr)
-        })
-      }
-      _this.setData({
-        loadMoreIs: res.data.informationList.length == 10
-      })
-      wx.hideLoading()
-      // 隐藏导航栏加载框
-      wx.hideNavigationBarLoading();
-      // 停止下拉动作
-      wx.stopPullDownRefresh();
+      if(res.data.returnCode.code=="success"){
+        // console.log(res.data)
+        var listArr = res.data.informationList;
 
-      if (res.data.type == 1) {  //type==1 无数据  ==0 有数据
+
+        var titleLight = [];
+        var inputs = _this.data.valTxt;
+        var lists = listArr
+        for (var i = 0; i < lists.length; i++) {
+          var word = lists[i].informationTitle
+          lists[i].informationTitle = _this.hilight_word(inputs, word)
+          // _this.setData({
+          //   list: lists
+          // })
+        }
+
+        if (_this.data.loadMoreIs == false) {
+          _this.setData({
+            currentPage: _this.data.currentPage++,
+            list: listArr,
+            isLoad: false
+          })
+        } else {
+          _this.setData({
+            isLoad: false,
+            currentPage: _this.data.currentPage++,
+            list: _this.data.list.concat(listArr)
+          })
+        }
         _this.setData({
-          isHide:false
+          loadMoreIs: res.data.informationList.length == 10
         })
-      } else {
-        _this.setData({
-          isHide: true
+        wx.hideLoading()
+        // 隐藏导航栏加载框
+        wx.hideNavigationBarLoading();
+        // 停止下拉动作
+        wx.stopPullDownRefresh();
+
+        if (res.data.type == 1) {  //type==1 无数据  ==0 有数据
+          _this.setData({
+            isHide: false
+          })
+        } else {
+          _this.setData({
+            isHide: true
+          })
+        }
+      }else{
+        wx.showModal({
+          title: '提示',
+          content: res.data.returnCode.message,
+          showCancel: false
         })
       }
     })
+  },
+  // 根据搜索字分割字符
+  hilight_word: function (key, word) {
+    let idx = word.indexOf(key), t = [];
+
+    if (idx > -1) {
+      if (idx == 0) {
+        t = this.hilight_word(key, word.substr(key.length));
+        t.unshift({ key: true, word: key });
+        return t;
+      }
+
+      if (idx > 0) {
+        t = this.hilight_word(key, word.substr(idx));
+        t.unshift({ key: false, word: word.substring(0, idx) });
+        return t;
+      }
+    }
+    return [{ key: false, word: word }];
   },
   //跳转至文章详情页
   mainJump: function (e) {

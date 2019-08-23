@@ -1,9 +1,9 @@
 const apiUrl = 'https://zixun.ishangche.net/information/'  //端口域名
 const loginApi = "https://zixun.ishangche.net/user/" //登陆注册
 const focusApi = "https://zixun.ishangche.net/enterprise/"//关注端口
-// const apiUrl = 'http://192.168.1.138:90/information/'  //端口域名
-// const loginApi = "http://192.168.1.138:90/user/" //登陆注册
-// const focusApi = "http://192.168.1.138:90/enterprise/"//关注端口
+// const apiUrl = 'http://192.168.1.188:90/information/'  //端口域名
+// const loginApi = "http://192.168.1.188:90/user/" //登陆注册
+// const focusApi = "http://192.168.1.188:90/enterprise/"//关注端口
 const config = {
   allUrl: {
     infoUrl: apiUrl + "homeInformations", //资讯首页
